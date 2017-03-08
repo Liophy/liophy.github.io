@@ -2,18 +2,18 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Football</title>
-    <link rel="stylesheet" type="text/css" href="styles/football.css" />
+    <link rel="stylesheet" type="text/css" href="styles/football.css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="styles/jquery.datetimepicker.min.css"/>
+
 
     <script src="scripts/jquery-3.1.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="scripts/football.js"></script>
     <script src="scripts/jquery.datetimepicker.full.js"></script>
-
-
+    <script src="scripts/youtube.js"></script>
 
 
 </head>
@@ -51,14 +51,14 @@
             <form id="formLogin">
                 <label>
                     <div>Username:</div>
-                    <input type="text" name="username" id="loginUsername" required />
+                    <input type="text" name="username" id="loginUsername" required/>
                 </label>
                 <label>
                     <div>Password:</div>
-                    <input type="password" name="password" id="loginPasswd" required />
+                    <input type="password" name="password" id="loginPasswd" required/>
                 </label>
                 <div>
-                    <input type="submit" value="Login" />
+                    <input type="submit" value="Login"/>
                 </div>
             </form>
         </section>
@@ -68,18 +68,18 @@
             <form id="formRegister">
                 <label>
                     <div>Username:</div>
-                    <input type="text" name="username" id="registerUsername" required />
+                    <input type="text" name="username" id="registerUsername" required/>
                 </label>
                 <label>
                     <div>Password:</div>
-                    <input type="password" name="password" id="registerPasswd" required />
+                    <input type="password" name="password" id="registerPasswd" required/>
                 </label>
                 <label>
                     <div>Name:</div>
-                    <input type="name" name="name" id="registerName" />
+                    <input type="name" name="name" id="registerName"/>
                 </label>
                 <div>
-                    <input type="submit" value="Register" />
+                    <input type="submit" value="Register"/>
                 </div>
             </form>
         </section>
@@ -89,11 +89,11 @@
             <form id="formAddNewPlayer">
                 <label>
                     <div>Username:</div>
-                    <input type="text" name="username" id="addNewPlayerUsername" required />
+                    <input type="text" name="username" id="addNewPlayerUsername" required/>
                 </label>
 
                 <div>
-                    <input type="submit" value="Register" />
+                    <input type="submit" value="Register"/>
                 </div>
             </form>
         </section>
@@ -102,7 +102,7 @@
             <h1 id="viewUserHomeHeading">Welcome, {user}!</h1>
             <a href="#" id="linkUserHomeAddMatch">Добави мач</a>
             <a href="#" id="linkUserHomeAddPlayer">Добави играч</a>
-            <a href="#" id="linkUserHomeRecalculateMatches">Преизчисли мачовете</a>
+            <a href="#" id="linkUserHomeRecalculateMatches">Преизчисли</a>
             <div>
                 <div class="youtube" id="wvfbPtnLL6k" style="width:860px; height: 515px;">
                 </div>
@@ -114,47 +114,47 @@
 
                 <script>
 
-                // Find all the YouTube video embedded on a page
-                var videos = document.getElementsByClassName("youtube");
+                    // Find all the YouTube video embedded on a page
+                    var videos = document.getElementsByClassName("youtube");
 
-                for (var i=0; i<videos.length; i++) {
+                    for (var i = 0; i < videos.length; i++) {
 
-                var youtube = videos[i];
+                        var youtube = videos[i];
 
-                // Based on the YouTube ID, we can easily find the thumbnail image
-                var img = document.createElement("img");
-                img.setAttribute("src", "http://i.ytimg.com/vi/"
-                + youtube.id + "/hqdefault.jpg");
-                img.setAttribute("class", "thumb");
-
-
-                // Overlay the Play icon to make it look like a video player
-                var circle = document.createElement("div");
-                circle.setAttribute("class","circle");
-
-                youtube.appendChild(img);
-                youtube.appendChild(circle);
-
-                // Attach an onclick event to the YouTube Thumbnail
-                youtube.onclick = function() {
-
-                // Create an iFrame with autoplay set to true
-                var iframe = document.createElement("iframe");
-                iframe.setAttribute("src",
-                "https://www.youtube.com/embed/" + this.id
-                + "?autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1");
-
-                // The height and width of the iFrame should be the same as parent
-                iframe.style.width  = this.style.width;
-                iframe.style.height = this.style.height;
-
-                // Replace the YouTube thumbnail with YouTube HTML5 Player
-                this.parentNode.replaceChild(iframe, this);
+                        // Based on the YouTube ID, we can easily find the thumbnail image
+                        var img = document.createElement("img");
+                        img.setAttribute("src", "http://i.ytimg.com/vi/"
+                            + youtube.id + "/hqdefault.jpg");
+                        img.setAttribute("class", "thumb");
 
 
-                };
+                        // Overlay the Play icon to make it look like a video player
+                        var circle = document.createElement("div");
+                        circle.setAttribute("class", "circle");
 
-                }
+                        youtube.appendChild(img);
+                        youtube.appendChild(circle);
+
+                        // Attach an onclick event to the YouTube Thumbnail
+                        youtube.onclick = function () {
+
+                            // Create an iFrame with autoplay set to true
+                            var iframe = document.createElement("iframe");
+                            iframe.setAttribute("src",
+                                "https://www.youtube.com/embed/" + this.id
+                                + "?autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1");
+
+                            // The height and width of the iFrame should be the same as parent
+                            iframe.style.width = this.style.width;
+                            iframe.style.height = this.style.height;
+
+                            // Replace the YouTube thumbnail with YouTube HTML5 Player
+                            this.parentNode.replaceChild(iframe, this);
+
+
+                        };
+
+                    }
 
                 </script>
 
@@ -183,7 +183,14 @@
         </section>
 
         <section id="viewSingleMatch">
+
             <div class="singleMatch" id="showSingleMatch">
+            </div>
+            <div id="player">
+                <script>
+
+                </script>
+
             </div>
         </section>
 
@@ -195,22 +202,26 @@
                     <input type="text" value="" id="datetimepicker"/>
                     <label>Дата</label>
                 </div>
+                <div>
+                    <input type="text" id="video" required/>
+                    <label>Видео</label>
+                </div>
 
 
                 <div>
-                    <input type="text" name="team1" id="teamOneName" required />
-                    <label >Име Отбор 1</label>
+                    <input type="text" name="team1" id="teamOneName" required/>
+                    <label>Име Отбор 1</label>
                 </div>
                 <div>
-                    <input type="text" name="result" id="teamOneResult" required />
-                    <label >Резултат отбор 1</label>
+                    <input type="text" name="result" id="teamOneResult" required/>
+                    <label>Резултат отбор 1</label>
                 </div>
                 <div>
-                    <select id="teamOnePlayerOne" ></select>
+                    <select id="teamOnePlayerOne"></select>
                     <label>Отбор 1, Играч 1</label>
                 </div>
                 <div>
-                    <select id="teamOnePlayerTwo" ></select>
+                    <select id="teamOnePlayerTwo"></select>
                     <label class="ui-widget">Отбор 1, Играч 2</label>
                 </div>
                 <div>
@@ -232,11 +243,11 @@
                 <br><br>
 
                 <div>
-                    <input type="text" name="team1" id="teamTwoName" required />
+                    <input type="text" name="team1" id="teamTwoName" required/>
                     <label>Име Отбор 2</label>
                 </div>
                 <div>
-                    <input type="text" name="result" id="teamTwoResult" required />
+                    <input type="text" name="result" id="teamTwoResult" required/>
                     <label>Резултат отбор 2</label>
                 </div>
                 <div>
@@ -265,7 +276,7 @@
                 </div>
 
                 <div>
-                    <input type="submit" value="Добави" />
+                    <input type="submit" value="Добави"/>
                 </div>
 
             </form>

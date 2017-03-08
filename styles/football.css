@@ -115,6 +115,6 @@ footer {
     padding: 5px 10px;
 
 }
-#listAllMatches, #viewSingleMatch, #viewAllPlayers tr td { cursor: pointer; }
+#listAllMatches, #viewSingleMatch, #viewAllPlayers, #viewSinglePlayer tr td { cursor: pointer; }
 
 
