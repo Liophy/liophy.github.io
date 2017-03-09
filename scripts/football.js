@@ -6,6 +6,10 @@ function startApp() {
         'Authorization': "Basic " + btoa(kinveyAppKey + ":" + kinveyAppSecret),
     };
 
+    $("#loadingBox").hide();
+    $("#infoBox").hide();
+    $("#errorBox").hide();
+
     sessionStorage.clear();
     showHideMenuLinks();
     showView('viewAppHome');
@@ -35,14 +39,14 @@ function startApp() {
         $(this).fadeOut();
     });
 
-    $(document).on({
-        ajaxStart: function () {
-            $("#loadingBox").show()
-        },
-        ajaxStop: function () {
-            $("#loadingBox").hide()
-        }
-    });
+    //$(document).on({
+    //    ajaxStart: function () {
+    //        $("#loadingBox").show()
+    //    },
+    //    ajaxStop: function () {
+    //        $("#loadingBox").hide()
+    //    }
+    //});
 
     function showHideMenuLinks() {
         $("#linkMenuAppHome").show();
@@ -52,8 +56,6 @@ function startApp() {
             $("#linkMenuLogin").hide();
             $("#linkMenuRegister").hide();
             $("#linkMenuUserHome").show();
-            $("#linkMenuShop").show();
-            $("#linkMenuCart").show();
             $("#linkMenuLogout").show();
         } else {
             // No logged in user
@@ -61,8 +63,6 @@ function startApp() {
             $("#linkMenuLogin").show();
             $("#linkMenuRegister").show();
             $("#linkMenuUserHome").hide();
-            $("#linkMenuShop").hide();
-            $("#linkMenuCart").hide();
             $("#linkMenuLogout").hide();
         }
     }
@@ -183,7 +183,7 @@ function startApp() {
         $('#infoBox').show();
         setTimeout(function () {
             $('#infoBox').fadeOut();
-        }, 3000);
+        }, 1000);
     }
 
     function handleAjaxError(response) {
@@ -220,7 +220,7 @@ function startApp() {
             });
 
             $('#listAllMatches').empty();
-            showInfo('Matches loaded.');
+            //showInfo('Matches loaded.');
 
             if (matches.length == 0) {
                 $('#listAllMatches').text('Няма мачове.');
@@ -290,7 +290,7 @@ function startApp() {
 
             players.sort(compare);
 
-            showInfo('Players loaded');
+            //showInfo('Players loaded');
             $('#viewAllPlayers').empty();
 
             let playersTable = $('<table>')
