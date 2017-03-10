@@ -379,7 +379,7 @@ function startApp() {
 
                 function appendMatchRow(match, matchTable) {
 
-                    let editMatchLink = $('<a href="#">[Edit]</a>').click(editMatch.bind(this, match));
+                    //let editMatchLink = $('<a href="#">[Edit]</a>').click(editMatch.bind(this, match));
                     let showMatchLink = $('<a href="#"></a>').click(showSingleMatch.bind(this, match));
 
 
