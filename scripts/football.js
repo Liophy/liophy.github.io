@@ -183,12 +183,11 @@ function startApp() {
                 .append($('<tr>').append(
                     '<th>N</th>' +
                     '<th>Име</th>' +
-                    '<th>Ранг</th>' +
-                    '<th>Точки</th>' +
                     '<th>Мачове</th>' +
                     '<th>Победи</th>' +
                     '<th>Равни</th>' +
-                    '<th>Загуби</th>'
+                    '<th>Загуби</th>'+
+                    '<th>Точки</th>'
                 ));
             $('#viewAllPlayers').append(playersTable);
             let count = 1;
@@ -204,14 +203,11 @@ function startApp() {
                 playersTable.append($('<tr>').append(
                     $('<td>').text(count),
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
-                    $('<td>').text(player.playerstats.rank),
-                    $('<td>').text(player.playerstats.points),
                     $('<td>').text(player.playerstats.matches),
                     $('<td>').text(player.playerstats.wins),
                     $('<td>').text(player.playerstats.draws),
                     $('<td>').text(player.playerstats.losses),
-                    $('<td>')
-
+                    $('<td>').text(player.playerstats.points)
                 ));
             }
         }
