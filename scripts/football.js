@@ -167,9 +167,9 @@ function startApp() {
         function loadUsersSuccess(players) {
 
             function compare(a, b) {
-                if (Number(a.playerstats.rank) < Number(b.playerstats.rank))
+                if (Number(a.playerstats.points) < Number(b.playerstats.points))
                     return 1;
-                if (Number(a.playerstats.rank) > Number(b.playerstats.rank))
+                if (Number(a.playerstats.points) > Number(b.playerstats.points))
                     return -1;
                 return 0;
             }
