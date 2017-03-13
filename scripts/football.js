@@ -14,6 +14,7 @@ function startApp() {
     showView('viewAppHome');
     loginUser();
 
+    $("#linkMenuAppHome").click(showHomeView);
     $("#linkMenuAllMatches").click(listAllMatches);
     $("#linkMenuAllPlayers").click(listAllPlayers);
 
@@ -30,6 +31,10 @@ function startApp() {
     function showView(viewName) {
         $('main > section').hide();
         $('#' + viewName).show();
+    }
+
+    function showHomeView() {
+        showView('viewAppHome');
     }
 
     function showHomeViewUser() {
@@ -58,8 +63,6 @@ function startApp() {
         });
         function loginSuccess(userInfo) {
             saveAuthInSession(userInfo);
-            showHomeViewUser();
-
         }
     }
 
