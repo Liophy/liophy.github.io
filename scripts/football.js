@@ -328,75 +328,109 @@ function startApp() {
 
 
 
-            $.ajax({
-                method: "GET",
-                url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/matches",
-                headers: getKinveyUserAuthHeaders(),
-                success: loadMatchesSuccess,
-                error: handleAjaxError
+        $.ajax({
+            method: "GET",
+            url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/matches",
+            headers: getKinveyUserAuthHeaders(),
+            success: loadMatchesSuccess,
+            error: handleAjaxError
+        });
+
+
+        function loadMatchesSuccess(matches) {
+
+            matches.sort(function (a, b) {
+                return new Date(a.date) - new Date(b.date)
             });
 
+            let playersMatches = []
 
-            function loadMatchesSuccess(matches) {
-
-                matches.sort(function (a, b) {
-                    return new Date(a.date) - new Date(b.date)
-                });
-
-                let playersMatches = []
-
-                for (match of matches){
-                    if(match.team1.player1._id==player._id ||
-                        match.team1.player2._id==player._id ||
-                        match.team1.player3._id==player._id ||
-                        match.team1.player4._id==player._id ||
-                        match.team1.player5._id==player._id ||
-                        match.team1.player6._id==player._id ||
-                        match.team2.player1._id==player._id ||
-                        match.team2.player2._id==player._id ||
-                        match.team2.player3._id==player._id ||
-                        match.team2.player4._id==player._id ||
-                        match.team2.player5._id==player._id ||
-                        match.team2.player6._id==player._id
-                    )
+            for (match of matches){
+                if(match.team1.player1._id==player._id ||
+                    match.team1.player2._id==player._id ||
+                    match.team1.player3._id==player._id ||
+                    match.team1.player4._id==player._id ||
+                    match.team1.player5._id==player._id ||
+                    match.team1.player6._id==player._id ||
+                    match.team2.player1._id==player._id ||
+                    match.team2.player2._id==player._id ||
+                    match.team2.player3._id==player._id ||
+                    match.team2.player4._id==player._id ||
+                    match.team2.player5._id==player._id ||
+                    match.team2.player6._id==player._id
+                )
                     playersMatches.push(match)
-                }
-
-                let matchTable = $('<table>')
-                    .append($('<tr>').append(
-                        '<th>N</th>' +
-                        '<th>Отбор 1</th>' +
-                        '<th></th>' +
-                        '<th></th>' +
-                        '<th>Отбор 2</th>' +
-                        '<th>Дата</th>'
-                    ));
-                let count = 1;
-                for (let match of playersMatches) {
-                    appendMatchRow(match, matchTable);
-                }
-
-                function appendMatchRow(match, matchTable) {
-
-                    //let editMatchLink = $('<a href="#">[Edit]</a>').click(editMatch.bind(this, match));
-                    let showMatchLink = $('<a href="#"></a>').click(showSingleMatch.bind(this, match));
-
-
-                    matchTable.append($('<tr>').append(
-                        $('<td>').text(count).click(showSingleMatch.bind(this, match)),
-                        $('<td>').text(match.team1.name).click(showSingleMatch.bind(this, match)),
-                        $('<td>').text(match.team1.result).click(showSingleMatch.bind(this, match)),
-                        $('<td>').text(match.team2.result).click(showSingleMatch.bind(this, match)),
-                        $('<td>').text(match.team2.name).click(showSingleMatch.bind(this, match)),
-                        $('<td>').text(match.date).click(showSingleMatch.bind(this, match)),
-                        $('<td>')
-                            //.append(editMatchLink)
-                    ));
-                    count++
-                }
-                $('#viewSinglePlayer').append(matchTable);
             }
-     }
 
+            let matchTable = $('<table>')
+                .append($('<tr>').append(
+                    '<th>N</th>' +
+                    '<th>Отбор 1</th>' +
+                    '<th></th>' +
+                    '<th></th>' +
+                    '<th>Отбор 2</th>' +
+                    '<th>Дата</th>'
+                ));
+            let count = 1;
+            let outcome = "";
+            for (let match of playersMatches) {
+                appendMatchRow(match, matchTable);
+            }
+
+            function appendMatchRow(match, matchTable) {
+
+                //let editMatchLink = $('<a href="#">[Edit]</a>').click(editMatch.bind(this, match));
+                let showMatchLink = $('<a href="#"></a>').click(showSingleMatch.bind(this, match));
+
+                if(match.team1.player1._id==player._id ||
+                    match.team1.player2._id==player._id ||
+                    match.team1.player3._id==player._id ||
+                    match.team1.player4._id==player._id ||
+                    match.team1.player5._id==player._id ||
+                    match.team1.player6._id==player._id){
+                    if(Number(match.team1.result) > Number(match.team2.result)){
+                        outcome = "Победа"
+                    }
+                    else if (Number(match.team1.result) == Number(match.team2.result)){
+                        outcome = "Равенство"
+                    }
+
+                    else if(Number(match.team1.result) < Number(match.team2.result)){
+                        outcome = "Загуба"
+                    }
+
+                }
+                else {
+                    if(Number(match.team1.result) > Number(match.team2.result)){
+                        outcome = "Загуба"
+                    }
+                    else if (Number(match.team1.result) == Number(match.team2.result)){
+                        outcome = "Равенство"
+                    }
+
+                    else if(Number(match.team1.result) < Number(match.team2.result)){
+                        outcome = "Победа"
+                    }
+
+                }
+
+
+                matchTable.append($('<tr>').append(
+                    $('<td>').text(count).click(showSingleMatch.bind(this, match)),
+                    $('<td>').text(match.team1.name).click(showSingleMatch.bind(this, match)),
+                    $('<td>').text(match.team1.result).click(showSingleMatch.bind(this, match)),
+                    $('<td>').text(match.team2.result).click(showSingleMatch.bind(this, match)),
+                    $('<td>').text(match.team2.name).click(showSingleMatch.bind(this, match)),
+                    $('<td>').text(match.date).click(showSingleMatch.bind(this, match)),
+                    $('<td>').text(outcome).click(showSingleMatch.bind(this, match))
+
+                    //.append(editMatchLink)
+                ));
+
+                count++
+            }
+            $('#viewSinglePlayer').append(matchTable);
+        }
+    }
 
 }
