@@ -41,7 +41,7 @@
             <h1>Футбол</h1>
             <h2>ЪПДЕЙТ
                 <p>
-                    Променена е формулата, като е вдигнат таванът на головата разлика и вече той е 10 гола. Съответно равенството носи 10 точки, а не 5 точки. Преизчислени са всички мачове с новата формула
+                    Върната е старата формула, тъй като при 10 гола таван на головата разлика няма съществено значение дали ще победиш, ако е само с 1 гол. Променени са границите на коефициента. Сега вече той варира между 0.33 и 3.00.
                 </p>
             </h2>
 
@@ -53,8 +53,8 @@
 
             <p>Формулата за изчисляване на ранга съобразява разликата в силата между двата отбора, като я преубразува в хендикап във формата на голове. Така към реалния резултат по-слабият отбор получава бонус голове и след това се смятат реалните точки.</p>
             <p>точки за победителя = 10 + goalDifference</p>
-            <p>точки за загубилия =  -10 – goalDifference</p>
-            <p>точки при равенство =  10 </p>
+            <p>точки за загубилия =  -5 – goalDifference</p>
+            <p>точки при равенство =  5 </p>
 
             <p>handicap = (team1rank - team2rank) / 50</p>
 
@@ -76,16 +76,16 @@
 
 
             <p>GoalDifference  max = 10</p>
-            <p>rankDifference  max = 400</p>
+            <p>rankDifference  max = 300</p>
 
 
 
-            <p>coefficientStrongerTeam = 400 / (400 + rankDifference) </p>
-            <p>coefficientWeakerTeam = (400 + rankDifference) / 400</p>
+            <p>coefficientStrongerTeam = 150 / (150 + rankDifference) </p>
+            <p>coefficientWeakerTeam = (150 + rankDifference) / 150</p>
 
 
             <p>points for winner = (10 + goalDifference) * coefficientTeamOne</p>
-            <p>points for loser = ((10 - goalDifference) * coefficientTeamTwo</p>
+            <p>points for loser = ((5 - goalDifference) * coefficientTeamTwo</p>
 
             </p>
 
