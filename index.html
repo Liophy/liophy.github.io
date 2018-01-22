@@ -22,8 +22,10 @@
     <header id="menu">
 
         <a href="#" class="anonymous" id="linkMenuAppHome">Начало</a>
+        <a href="#" class="useronly" id="linkMenuRules">Регламент</a>
         <a href="#" class="useronly" id="linkMenuAllMatches">Мачове</a>
-        <a href="#" class="useronly" id="linkMenuAllPlayers">Играчи</a>
+        <a href="#" class="useronly" id="linkMenuRankings2017">Класиране 2017</a>
+        <a href="#" class="useronly" id="linkMenuRankings2018">Класиране 2018</a>
 
 
 
@@ -39,6 +41,15 @@
 
         <section id="viewAppHome">
             <h1>Футбол</h1>
+
+            <h3>
+                От 1 януари 2018 година статистиката е нулирана. Крайното класиране за сезон 2017 може да се види на съответната страница.
+            </h3>
+
+        </section>
+
+        <section id="viewRules">
+            <h1>Регламент</h1>
 
             <p>Този сайт показва индивидуално класиране по точки на играчите. Точките се изчисляват чрез две формули, които целят да се постигне относително високо ниво на обективност.</p>
             <p>Формулите използват изцяло и единствено резултатите от изиграните от играчите мачове. Има значение единствено крайният резултат, без индивидуалните постижения (голове, асистенции и т.н.). Всички играчи от отбора в съответният мач получават еднакъв брой точки.</p>
@@ -136,6 +147,49 @@
                     </tr>
                     </thead>
                     <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewRankings2017">
+            <h1>Играчи</h1>
+            <div class="players" id="listRankings2017">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Име</th>
+                        <th>Ранг</th>
+                        <th>Мачове</th>
+                        <th>Победи</th>
+                        <th>Равни</th>
+                        <th>Загуби</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- TODO: more messages will come here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewRankings2018">
+            <h1>Играчи</h1>
+            <div class="players" id="listRankings2018">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Име</th>
+                        <th>Ранг</th>
+                        <th>Мачове</th>
+                        <th>Победи</th>
+                        <th>Равни</th>
+                        <th>Загуби</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <!-- TODO: more messages will come here -->
                     </tbody>
                 </table>
@@ -147,7 +201,6 @@
             </div>
 
         </section>
-
 
     </main>
 

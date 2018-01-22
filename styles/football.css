@@ -115,6 +115,18 @@ footer {
     padding: 5px 10px;
 
 }
+.single-player-view-name  {
+    display: inline-block;
+    width: 440px;
+
+    text-align: center;
+    font-size: 2.3em;
+    background: #fff5cc;
+    color: #4d4d4d;
+    padding: 5px;
+    border-radius: 10px;
+
+}
 #listAllMatches, #viewSingleMatch, #viewAllPlayers, #viewSinglePlayer tr td { cursor: pointer; }
 
 
