@@ -274,11 +274,11 @@ function startApp() {
                 .append($('<tr>').append(
                     '<th>N</th>'+
                     ('<th>Име</th>')+
-                    ('<th>Точки</th>') +
                     '<th>Мачове</th>' +
                     '<th>Победи</th>' +
                     '<th>Равни</th>' +
-                    '<th>Загуби</th>'
+                    '<th>Загуби</th>' +
+                    ('<th>Точки</th>')
                 ));
             $('#viewAllPlayers').append(playersTable);
             let count = 1;
@@ -300,12 +300,11 @@ function startApp() {
                 playersTable.append($('<tr>').append(
                     $('<td>').text(count),
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
-                    $('<td>').text(player.playerstats2017.points),
                     $('<td>').text(player.playerstats2017.matches),
                     $('<td>').text(player.playerstats2017.wins),
                     $('<td>').text(player.playerstats2017.draws),
                     $('<td>').text(player.playerstats2017.losses),
-                    $('<td>')
+                    $('<td>').text(player.playerstats2017.points)
                 ));
             }
         }
@@ -362,11 +361,11 @@ function startApp() {
                 .append($('<tr>').append(
                     '<th>N</th>'+
                     ('<th>Име</th>')+
-                    ('<th>Точки</th>') +
                     '<th>Мачове</th>' +
                     '<th>Победи</th>' +
                     '<th>Равни</th>' +
-                    '<th>Загуби</th>'
+                    '<th>Загуби</th>' +
+                    ('<th>Точки</th>')
                 ));
             $('#viewAllPlayers').append(playersTable);
             let count = 1;
@@ -387,12 +386,11 @@ function startApp() {
                 playersTable.append($('<tr>').append(
                     $('<td>').text(count),
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
-                    $('<td>').text(player.playerstats2018.points),
                     $('<td>').text(player.playerstats2018.matches),
                     $('<td>').text(player.playerstats2018.wins),
                     $('<td>').text(player.playerstats2018.draws),
                     $('<td>').text(player.playerstats2018.losses),
-                    $('<td>')
+                    $('<td>').text(player.playerstats2018.points)
                 ));
             }
         }
