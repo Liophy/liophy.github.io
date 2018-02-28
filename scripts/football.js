@@ -78,8 +78,8 @@ function startApp() {
         sessionStorage.setItem("name", userInfo.name);
         sessionStorage.setItem("authToken", userInfo._kmd.authtoken);
         sessionStorage.setItem("userId", userInfo._id);
-        $("#spanMenuLoggedInUser").text("Welcome, " + userInfo.name);
-        $("#viewUserHomeHeading").text("Welcome, " + userInfo.name);
+        $("#spanMenuLoggedInUser").text("Welcome, " + userInfo.username);
+        $("#viewUserHomeHeading").text("Welcome, " + userInfo.username);
     }
 
     function handleAjaxError(response) {
