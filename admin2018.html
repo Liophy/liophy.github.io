@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Football</title>
+    <link rel="stylesheet" type="text/css" href="styles/football.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="styles/jquery.datetimepicker.min.css"/>
+
+
+    <script src="scripts/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="scripts/admin2018.js"></script>
+    <script src="scripts/jquery.datetimepicker.full.js"></script>
+    <script src="scripts/youtube.js"></script>
+</head>
+
+<body onload="startApp()">
+
+<div id="app">
+    <header id="menu">
+        <a href="#" class="anonymous" id="linkMenuAppHome">Home</a>
+        <a href="#" class="anonymous" id="linkMenuLogin">Login</a>
+        <a href="#" class="anonymous" id="linkMenuRegister">Register</a>
+
+        <a href="#" class="useronly" id="linkMenuUserHome">Home</a>
+        <a href="#" class="useronly" id="linkMenuAllMatches">Мачове</a>
+        <a href="#" class="useronly" id="linkMenuAllPlayers">Играчи</a>
+        <a href="#" class="useronly" id="linkMenuRankings2017">Класиране 2017</a>
+        <a href="#" class="useronly" id="linkMenuRankings2018">Класиране 2018</a>
+        <a href="#" class="useronly" id="linkMenuLogout">Logout</a>
+
+        <span class="useronly" id="spanMenuLoggedInUser">Здрасти, {user}!</span>
+    </header>
+
+    <main>
+
+        <div id="loadingBox">Loading ...</div>
+
+        <div id="infoBox">Info</div>
+
+        <div id="errorBox">Error</div>
+
+        <section id="viewAppHome">
+            <h1>Футбол</h1>
+
+        </section>
+
+        <section id="viewEditPlayer">
+
+            <form id="formEditPlayer">
+                <label>
+                    <div>Username:</div>
+                    <input type="text" name="username" id="editPlayerUsername" required/>
+                </label>
+
+                <div>
+                    <input type="submit"/>
+                </div>
+
+            </form>
+            <div>
+                <button id="editPlayerButton">EDIT</button>
+            </div>
+        </section>
+
+        <section id="viewLogin">
+            <h1>Please login</h1>
+            <form id="formLogin">
+                <label>
+                    <div>Username:</div>
+                    <input type="text" name="username" id="loginUsername" required/>
+                </label>
+                <label>
+                    <div>Password:</div>
+                    <input type="password" name="password" id="loginPasswd" required/>
+                </label>
+                <div>
+                    <input type="submit" value="Login"/>
+                </div>
+            </form>
+        </section>
+
+        <section id="viewRegister">
+            <h1>Please register here</h1>
+            <form id="formRegister">
+                <label>
+                    <div>Username:</div>
+                    <input type="text" name="username" id="registerUsername" required/>
+                </label>
+                <label>
+                    <div>Password:</div>
+                    <input type="password" name="password" id="registerPasswd" required/>
+                </label>
+                <label>
+                    <div>Name:</div>
+                    <input type="name" name="name" id="registerName"/>
+                </label>
+                <div>
+                    <input type="submit" value="Register"/>
+                </div>
+            </form>
+        </section>
+
+        <section id="viewAddPlayer">
+            <h1>Добавете нов играч</h1>
+            <form id="formAddNewPlayer">
+                <label>
+                    <div>Username:</div>
+                    <input type="text" name="username" id="addNewPlayerUsername" size="55" required/>
+                </label>
+
+                <div>
+                    <input type="submit" value="Register"/>
+                </div>
+            </form>
+        </section>
+
+        <section id="viewUserHome">
+            <h1 id="viewUserHomeHeading">Welcome, {user}!</h1>
+            <a href="#" id="linkUserHomeAddMatch">Добави мач</a>
+            <a href="#" id="linkUserHomeAddPlayer">Добави играч</a>
+            <a href="#" id="linkUserHomeRecalculateMatches">Преизчисли</a>
+            <a href="#" id="linkUserHomeTest2018">Test2018</a>
+            <div>
+                <div class="" id="wvfbPtnLL6k" style="width:860px; height: 515px;">
+                </div>
+
+                <div class="" id="SFsFO6FeK6A" style="width:860px; height: 515px;">
+                </div>
+
+                <!-- Include the JavaScript only once -->
+
+                <script>
+
+                    // Find all the YouTube video embedded on a page
+                    var videos = document.getElementsByClassName("youtube");
+
+                    for (var i = 0; i < videos.length; i++) {
+
+                        var youtube = videos[i];
+
+                        // Based on the YouTube ID, we can easily find the thumbnail image
+                        var img = document.createElement("img");
+                        img.setAttribute("src", "http://i.ytimg.com/vi/"
+                            + youtube.id + "/hqdefault.jpg");
+                        img.setAttribute("class", "thumb");
+
+
+                        // Overlay the Play icon to make it look like a video player
+                        var circle = document.createElement("div");
+                        circle.setAttribute("class", "circle");
+
+                        youtube.appendChild(img);
+                        youtube.appendChild(circle);
+
+                        // Attach an onclick event to the YouTube Thumbnail
+                        youtube.onclick = function () {
+
+                            // Create an iFrame with autoplay set to true
+                            var iframe = document.createElement("iframe");
+                            iframe.setAttribute("src",
+                                "https://www.youtube.com/embed/" + this.id
+                                + "?autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1");
+
+                            // The height and width of the iFrame should be the same as parent
+                            iframe.style.width = this.style.width;
+                            iframe.style.height = this.style.height;
+
+                            // Replace the YouTube thumbnail with YouTube HTML5 Player
+                            this.parentNode.replaceChild(iframe, this);
+
+
+                        };
+
+                    }
+
+                </script>
+
+            </div>
+        </section>
+
+        <section id="viewAllMatches">
+            <h1>Мачове</h1>
+
+            <div class="matches" id="listAllMatches">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Отбор 1</th>
+                        <th>Резултат</th>
+                        <th>Отбор 2</th>
+                        <th>Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- TODO: more messages will come here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewSingleMatch">
+
+            <div class="singleMatch" id="showSingleMatch">
+
+            </div>
+
+        </section>
+
+        <section id="viewAddMatch">
+            <h1>Добавете нов мач</h1>
+            <form id="formAddNewMatch">
+
+                <div>
+                    <input type="text" value="" id="datetimepicker"/>
+                    <label>Дата</label>
+                </div>
+                <div>
+                    <input type="text" id="video" required/>
+                    <label>Видео</label>
+                </div>
+
+
+                <div>
+                    <input type="text" name="team1" id="teamOneName" required/>
+                    <label>Име Отбор 1</label>
+                </div>
+                <div>
+                    <input type="number" name="result" id="teamOneResult" required/>
+                    <label>Резултат отбор 1</label>
+                </div>
+                <div>
+                    <select id="teamOnePlayerOne" required></select>
+                    <label>Отбор 1, Играч 1</label>
+                </div>
+                <div>
+                    <select id="teamOnePlayerTwo" required></select>
+                    <label class="ui-widget">Отбор 1, Играч 2</label>
+                </div>
+                <div>
+                    <select id="teamOnePlayerThree" required></select>
+                    <label class="ui-widget">Отбор 1, Играч 3</label>
+                </div>
+                <div>
+                    <select id="teamOnePlayerFour" required></select>
+                    <label class="ui-widget">Отбор 1, Играч 4</label>
+                </div>
+                <div>
+                    <select id="teamOnePlayerFive" required></select>
+                    <label class="ui-widget">Отбор 1, Играч 5</label>
+                </div>
+                <div>
+                    <select id="teamOnePlayerSix" required></select>
+                    <label class="ui-widget">Отбор 1, Играч 6</label>
+                </div>
+                <br><br>
+
+                <div>
+                    <input type="text" name="team1" id="teamTwoName" required/>
+                    <label>Име Отбор 2</label>
+                </div>
+                <div>
+                    <input type="number" name="result" id="teamTwoResult" required/>
+                    <label>Резултат отбор 2</label>
+                </div>
+                <div>
+                    <select id="teamTwoPlayerOne"></select>
+                    <label class="ui-widget">Отбор 2, Играч 1</label>
+                </div>
+                <div>
+                    <select id="teamTwoPlayerTwo"></select>
+                    <label class="ui-widget">Отбор 2, Играч 2</label>
+                </div>
+                <div>
+                    <select id="teamTwoPlayerThree"></select>
+                    <label class="ui-widget">Отбор 2, Играч 3</label>
+                </div>
+                <div>
+                    <select id="teamTwoPlayerFour"></select>
+                    <label class="ui-widget">Отбор 2, Играч 4</label>
+                </div>
+                <div>
+                    <select id="teamTwoPlayerFive"></select>
+                    <label class="ui-widget">Отбор 2, Играч 5</label>
+                </div>
+                <div>
+                    <select id="teamTwoPlayerSix"></select>
+                    <label class="ui-widget">Отбор 2, Играч 6</label>
+                </div>
+
+                <div>
+                    <input type="submit" value="Добави"/>
+                </div>
+
+            </form>
+
+        </section>
+
+        <section id="viewAllPlayers">
+            <h1>Играчи</h1>
+            <div class="players" id="listAllPlayers">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Име</th>
+                        <th>Ранг</th>
+                        <th>Мачове</th>
+                        <th>Победи</th>
+                        <th>Равни</th>
+                        <th>Загуби</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- TODO: more messages will come here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewRankings2017">
+            <h1>Играчи</h1>
+            <div class="players" id="listRankings2017">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Име</th>
+                        <th>Ранг</th>
+                        <th>Мачове</th>
+                        <th>Победи</th>
+                        <th>Равни</th>
+                        <th>Загуби</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- TODO: more messages will come here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewRankings2018">
+            <h1>Играчи</h1>
+            <div class="players" id="listRankings2018">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Име</th>
+                        <th>Ранг</th>
+                        <th>Мачове</th>
+                        <th>Победи</th>
+                        <th>Равни</th>
+                        <th>Загуби</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- TODO: more messages will come here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewSinglePlayer">
+            <div class="singlePlayer" id="showSinglePlayer">
+            </div>
+
+        </section>
+
+
+    </main>
+
+    <footer>Футбол Liophy - Simple SPA Application</footer>
+</div>
+
+</body>
+
+</html>
