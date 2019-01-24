@@ -75,7 +75,7 @@ function startApp() {
 
     function saveAuthInSession(userInfo) {
         sessionStorage.setItem("username", userInfo.username);
-        sessionStorage.setItem("name", userInfo.name);
+        sessionStorage.setItem("name", userInfo.username);
         sessionStorage.setItem("authToken", userInfo._kmd.authtoken);
         sessionStorage.setItem("userId", userInfo._id);
         $("#spanMenuLoggedInUser").text("Welcome " + userInfo.username);
