@@ -1,0 +1,34 @@
+
+<head>
+    <script src="scripts/jquery-3.1.1.min.js"></script>
+ 
+</head>
+
+<div>
+    <button id="btn">Click</button>
+    <input type="file" id="myFile">
+ 
+</div>
+<script>
+     
+    //$('#btn').click(readTextFile);
+
+
+        var input = document.getElementById("myFile");
+var output = document.getElementById("output");
+
+
+input.addEventListener("change", function () {
+  if (this.files && this.files[0]) {
+    var myFile = this.files[0];
+    var reader = new FileReader();
+    
+    reader.addEventListener('load', function (e) {
+      console.log(JSON.parse(e.target.result)[3])
+    });
+    
+    reader.readAsText(myFile, 'UTF-8');
+  }   
+});
+
+</script>
