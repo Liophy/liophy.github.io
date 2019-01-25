@@ -1,0 +1,44 @@
+<div>
+    <div>Matches</div>
+    <input type="file" id="inputMatches">
+</div>
+<div>
+    <div>Players</div>
+    <input type="file" id="inputPlayers">
+</div>
+<script>
+
+    var inputPlayers = document.getElementById("inputPlayers");
+    var inputMatches = document.getElementById("inputMatches");
+
+    inputPlayers.addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+            var playersFile = this.files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener('load', function (e) {
+                let players = JSON.parse(e.target.result);
+                console.log(players);
+            });
+
+            reader.readAsText(playersFile, 'UTF-8');
+        }
+    });
+
+
+    inputMatches.addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+            var matchesFile = this.files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener('load', function (e) {
+                let matches = JSON.parse(e.target.result);
+                console.log(matches);
+            });
+
+            reader.readAsText(matchesFile, 'UTF-8');
+        }
+    });
+
+
+</script>

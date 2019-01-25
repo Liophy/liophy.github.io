@@ -55,7 +55,6 @@ function newCalculateMatch(match) {
             if (rankDifference > 30) {
                 rankDifference = 30;
             }
-            console.log(`team1rank=  ${team1rank}`)
 
             if (team1rank > team2rank) {
                 //checks only the handicapped result;
