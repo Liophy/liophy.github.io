@@ -11,7 +11,7 @@
 
     <script src="scripts/jquery-3.1.1.min.js"></script>
     <script src="scripts/jquery-ui.js"></script>
-    <script src="scripts/admin2018.js"></script>
+    <script src="scripts/admin2019.js"></script>
     <script src="scripts/jquery.datetimepicker.full.js"></script>
     <script src="scripts/youtube.js"></script>
 </head>
@@ -118,11 +118,13 @@
         </section>
 
         <section id="viewUserHome">
-            <h1 id="viewUserHomeHeading">Welcome, {user}!</h1>
+            <h1 id="viewUserHomeHeading">Welcome, {username}!</h1>
             <a href="#" id="linkUserHomeAddMatch">Добави мач</a>
             <a href="#" id="linkUserHomeAddPlayer">Добави играч</a>
             <a href="#" id="linkUserHomeRecalculateMatches">Преизчисли</a>
             <a href="#" id="linkUserHomeTest2018">Test2018</a>
+            
+    
             <div>
                 <div class="" id="wvfbPtnLL6k" style="width:860px; height: 515px;">
                 </div>
@@ -133,49 +135,34 @@
                 <!-- Include the JavaScript only once -->
 
                 <script>
-
                     // Find all the YouTube video embedded on a page
                     var videos = document.getElementsByClassName("youtube");
-
                     for (var i = 0; i < videos.length; i++) {
-
                         var youtube = videos[i];
-
                         // Based on the YouTube ID, we can easily find the thumbnail image
                         var img = document.createElement("img");
                         img.setAttribute("src", "http://i.ytimg.com/vi/"
                             + youtube.id + "/hqdefault.jpg");
                         img.setAttribute("class", "thumb");
-
-
                         // Overlay the Play icon to make it look like a video player
                         var circle = document.createElement("div");
                         circle.setAttribute("class", "circle");
-
                         youtube.appendChild(img);
                         youtube.appendChild(circle);
-
                         // Attach an onclick event to the YouTube Thumbnail
                         youtube.onclick = function () {
-
                             // Create an iFrame with autoplay set to true
                             var iframe = document.createElement("iframe");
                             iframe.setAttribute("src",
                                 "https://www.youtube.com/embed/" + this.id
                                 + "?autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1");
-
                             // The height and width of the iFrame should be the same as parent
                             iframe.style.width = this.style.width;
                             iframe.style.height = this.style.height;
-
                             // Replace the YouTube thumbnail with YouTube HTML5 Player
                             this.parentNode.replaceChild(iframe, this);
-
-
                         };
-
                     }
-
                 </script>
 
             </div>

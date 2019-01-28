@@ -1,5 +1,5 @@
 function startApp() {
-    
+
     const kinveyBaseUrl = "https://baas.kinvey.com/";
     const kinveyAppKey = "kid_ByqWfGbBe";
     const kinveyAppSecret = "1d9bf49947f14c95a06f127fcb3e150b";
@@ -37,7 +37,7 @@ function startApp() {
     $("#linkUserHomeAddPlayer").click(addNewPlayerView);
 
     $("#linkUserHomeRecalculateMatches").click(reCalculateAllMatches);
-    $("#linkUserHomeTest2018").click(resetStatsSingleUserTest);
+    $("#linkUserHomeTest2018").click(reCalculateAllMatches);
 
 
     $("#infoBox, #errorBox").click(function () {
@@ -105,7 +105,7 @@ function startApp() {
         }
     }
 
-    function loginUser()    {
+    function loginUser() {
         let userData = {
             username: "liophy",
             password: "123",
@@ -176,11 +176,11 @@ function startApp() {
 
     function saveAuthInSession(userInfo) {
         sessionStorage.setItem("username", userInfo.username);
-        sessionStorage.setItem("name", userInfo.name);
+        sessionStorage.setItem("name", userInfo.username);
         sessionStorage.setItem("authToken", userInfo._kmd.authtoken);
         sessionStorage.setItem("userId", userInfo._id);
-        $("#spanMenuLoggedInUser").text("Welcome, " + userInfo.name);
-        $("#viewUserHomeHeading").text("Welcome, " + userInfo.name);
+        $("#spanMenuLoggedInUser").text("Welcome, " + userInfo.username);
+        $("#viewUserHomeHeading").text("Welcome, " + userInfo.username);
     }
 
     function logoutUser() {
@@ -206,7 +206,7 @@ function startApp() {
         $('#infoBox').show();
         setTimeout(function () {
             $('#infoBox').fadeOut();
-        }, 1000);
+        }, 100000);
     }
 
     function handleAjaxError(response) {
@@ -307,24 +307,24 @@ function startApp() {
                     return -1;
                 return 0;
             }
-            function compareName(a,b){
+            function compareName(a, b) {
                 if (Number(a.name) < Number(b.name))
                     return 1;
                 if (Number(a.name) > Number(b.name))
                     return -1;
                 return 0;
             }
-            function comparePoints(a,b){
+            function comparePoints(a, b) {
                 if (Number(a.playerstats.points) < Number(b.playerstats.points))
                     return 1;
                 if (Number(a.playerstats.points) > Number(b.playerstats.points))
                     return -1;
                 return 0;
             }
-            function comparePointsPerGame(a,b){
-                if (Number(a.playerstats.points/a.playerstats.matches) < Number(b.playerstats.points/b.playerstats.matches))
+            function comparePointsPerGame(a, b) {
+                if (Number(a.playerstats.points / a.playerstats.matches) < Number(b.playerstats.points / b.playerstats.matches))
                     return 1;
-                if (Number(a.playerstats.points/a.playerstats.matches) > Number(b.playerstats.points/b.playerstats.matches))
+                if (Number(a.playerstats.points / a.playerstats.matches) > Number(b.playerstats.points / b.playerstats.matches))
                     return -1;
                 return 0;
             }
@@ -336,8 +336,8 @@ function startApp() {
 
             let playersTable = $('<table>')
                 .append($('<tr>').append(
-                    '<th>N</th>'+
-                    ('<th>Име</th>')+
+                    '<th>N</th>' +
+                    ('<th>Име</th>') +
                     ('<th>Ранг</th>') +
                     ('<th>Точки</th>') +
                     ('<th>Т/М</th>') +
@@ -367,7 +367,7 @@ function startApp() {
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
                     $('<td>').text(player.playerstats.rank),
                     $('<td>').text(player.playerstats.points),
-                    $('<td>').text((player.playerstats.points/player.playerstats.matches).toFixed(2)),
+                    $('<td>').text((player.playerstats.points / player.playerstats.matches).toFixed(2)),
                     $('<td>').text(player.playerstats.matches),
                     $('<td>').text(player.playerstats.wins),
                     $('<td>').text(player.playerstats.draws),
@@ -399,24 +399,24 @@ function startApp() {
                     return -1;
                 return 0;
             }
-            function compareName(a,b){
+            function compareName(a, b) {
                 if (Number(a.name) < Number(b.name))
                     return 1;
                 if (Number(a.name) > Number(b.name))
                     return -1;
                 return 0;
             }
-            function comparePoints(a,b){
+            function comparePoints(a, b) {
                 if (Number(a.playerstats2017.points) < Number(b.playerstats2017.points))
                     return 1;
                 if (Number(a.playerstats2017.points) > Number(b.playerstats2017.points))
                     return -1;
                 return 0;
             }
-            function comparePointsPerGame(a,b){
-                if (Number(a.playerstats.points/a.playerstats.matches) < Number(b.playerstats.points/b.playerstats.matches))
+            function comparePointsPerGame(a, b) {
+                if (Number(a.playerstats.points / a.playerstats.matches) < Number(b.playerstats.points / b.playerstats.matches))
                     return 1;
-                if (Number(a.playerstats.points/a.playerstats.matches) > Number(b.playerstats.points/b.playerstats.matches))
+                if (Number(a.playerstats.points / a.playerstats.matches) > Number(b.playerstats.points / b.playerstats.matches))
                     return -1;
                 return 0;
             }
@@ -428,8 +428,8 @@ function startApp() {
 
             let playersTable = $('<table>')
                 .append($('<tr>').append(
-                    '<th>N</th>'+
-                    ('<th>Име</th>')+
+                    '<th>N</th>' +
+                    ('<th>Име</th>') +
                     ('<th>Ранг</th>') +
                     ('<th>Точки</th>') +
                     ('<th>Т/М</th>') +
@@ -445,7 +445,7 @@ function startApp() {
 
 
             for (let player of players) {
-                if(player.playerstats2017.points>0){
+                if (player.playerstats2017.points > 0) {
                     appendPlayerRow(player, playersTable);
                     count++;
                 }
@@ -462,7 +462,7 @@ function startApp() {
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
                     $('<td>').text(player.rank),
                     $('<td>').text(player.playerstats2017.points),
-                    $('<td>').text((player.playerstats2017.points/player.playerstats2017.matches).toFixed(2)),
+                    $('<td>').text((player.playerstats2017.points / player.playerstats2017.matches).toFixed(2)),
                     $('<td>').text(player.playerstats2017.matches),
                     $('<td>').text(player.playerstats2017.wins),
                     $('<td>').text(player.playerstats2017.draws),
@@ -494,24 +494,24 @@ function startApp() {
                     return -1;
                 return 0;
             }
-            function compareName(a,b){
+            function compareName(a, b) {
                 if (Number(a.name) < Number(b.name))
                     return 1;
                 if (Number(a.name) > Number(b.name))
                     return -1;
                 return 0;
             }
-            function comparePoints(a,b){
+            function comparePoints(a, b) {
                 if (Number(a.playerstats2018.points) < Number(b.playerstats2018.points))
                     return 1;
                 if (Number(a.playerstats2018.points) > Number(b.playerstats2018.points))
                     return -1;
                 return 0;
             }
-            function comparePointsPerGame(a,b){
-                if (Number(a.playerstats.points/a.playerstats.matches) < Number(b.playerstats.points/b.playerstats.matches))
+            function comparePointsPerGame(a, b) {
+                if (Number(a.playerstats.points / a.playerstats.matches) < Number(b.playerstats.points / b.playerstats.matches))
                     return 1;
-                if (Number(a.playerstats.points/a.playerstats.matches) > Number(b.playerstats.points/b.playerstats.matches))
+                if (Number(a.playerstats.points / a.playerstats.matches) > Number(b.playerstats.points / b.playerstats.matches))
                     return -1;
                 return 0;
             }
@@ -523,8 +523,8 @@ function startApp() {
 
             let playersTable = $('<table>')
                 .append($('<tr>').append(
-                    '<th>N</th>'+
-                    ('<th>Име</th>')+
+                    '<th>N</th>' +
+                    ('<th>Име</th>') +
                     ('<th>Ранг</th>') +
                     ('<th>Точки</th>') +
                     ('<th>Т/М</th>') +
@@ -540,7 +540,7 @@ function startApp() {
 
 
             for (let player of players) {
-                if(player.playerstats2018.points>0){
+                if (player.playerstats2018.points > 0) {
                     appendPlayerRow(player, playersTable);
                     count++;
                 }
@@ -556,7 +556,7 @@ function startApp() {
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
                     $('<td>').text(player.rank),
                     $('<td>').text(player.playerstats2018.points),
-                    $('<td>').text((player.playerstats2018.points/player.playerstats2018.matches).toFixed(2)),
+                    $('<td>').text((player.playerstats2018.points / player.playerstats2018.matches).toFixed(2)),
                     $('<td>').text(player.playerstats2018.matches),
                     $('<td>').text(player.playerstats2018.wins),
                     $('<td>').text(player.playerstats2018.draws),
@@ -615,7 +615,7 @@ function startApp() {
             success: deleteMatchSuccess,
             error: handleAjaxError
         });
-        function deleteMatchSuccess(){
+        function deleteMatchSuccess() {
             showInfo('Мачът е изтрит');
             listAllMatches();
         }
@@ -762,7 +762,7 @@ function startApp() {
     function showSingleMatch(match) {
         $('#showSingleMatch').empty();
         showView('viewSingleMatch');
-        $('#showSingleMatch').append($('<div>', {id: 'player'}))
+        $('#showSingleMatch').append($('<div>', { id: 'player' }))
 
 
 
@@ -773,15 +773,10 @@ function startApp() {
                 $('<th>').text(match.team2.result),
                 $('<th>').text(match.team2.name)
             )).append($('<tr>').append(
-                $('<td>').text(""),
+                $('<td>').text("Отборен ранг преди мача"),
                 $('<td>').text(match.team1.rank),
                 $('<td>').text(match.team2.rank),
                 $('<td>').text("Отборен ранг преди мача")
-            )).append($('<tr>').append(
-                $('<td>').text(""),
-                $('<td>').text(Number(match.team1.coefficient).toFixed(2)),
-                $('<td>').text(Number(match.team2.coefficient).toFixed(2)),
-                $('<td>').text("Коефициент")
             ));
 
         let singleMatchPlayersTable = $('<table>')
@@ -792,33 +787,33 @@ function startApp() {
                 $('<th>').text("Играч")
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player1.username).click(showSinglePlayer.bind(this, match.team1.player1)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player1)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player1)),
+                $('<td>').text(match.team1.player1.points).click(showSinglePlayer.bind(this, match.team1.player1)),
+                $('<td>').text(match.team2.player1.points).click(showSinglePlayer.bind(this, match.team2.player1)),
                 $('<td>').text(match.team2.player1.username).click(showSinglePlayer.bind(this, match.team2.player1))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player2.username).click(showSinglePlayer.bind(this, match.team1.player2)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player2)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player2)),
+                $('<td>').text(match.team1.player2.points).click(showSinglePlayer.bind(this, match.team1.player2)),
+                $('<td>').text(match.team2.player2.points).click(showSinglePlayer.bind(this, match.team2.player2)),
                 $('<td>').text(match.team2.player2.username).click(showSinglePlayer.bind(this, match.team2.player2))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player3.username).click(showSinglePlayer.bind(this, match.team1.player3)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player3)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player3)),
+                $('<td>').text(match.team1.player3.points).click(showSinglePlayer.bind(this, match.team1.player3)),
+                $('<td>').text(match.team2.player3.points).click(showSinglePlayer.bind(this, match.team2.player3)),
                 $('<td>').text(match.team2.player3.username).click(showSinglePlayer.bind(this, match.team2.player3))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player4.username).click(showSinglePlayer.bind(this, match.team1.player4)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player4)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player4)),
+                $('<td>').text(match.team1.player4.points).click(showSinglePlayer.bind(this, match.team1.player4)),
+                $('<td>').text(match.team2.player4.points).click(showSinglePlayer.bind(this, match.team2.player4)),
                 $('<td>').text(match.team2.player4.username).click(showSinglePlayer.bind(this, match.team2.player4))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player5.username).click(showSinglePlayer.bind(this, match.team1.player5)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player5)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player5)),
+                $('<td>').text(match.team1.player5.points).click(showSinglePlayer.bind(this, match.team1.player5)),
+                $('<td>').text(match.team2.player5.points).click(showSinglePlayer.bind(this, match.team2.player5)),
                 $('<td>').text(match.team2.player5.username).click(showSinglePlayer.bind(this, match.team2.player5))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player6.username).click(showSinglePlayer.bind(this, match.team1.player6)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player6)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player6)),
+                $('<td>').text(match.team1.player6.points).click(showSinglePlayer.bind(this, match.team1.player6)),
+                $('<td>').text(match.team2.player6.points).click(showSinglePlayer.bind(this, match.team2.player6)),
                 $('<td>').text(match.team2.player6.username).click(showSinglePlayer.bind(this, match.team2.player6))
             ));
 
@@ -826,9 +821,9 @@ function startApp() {
 
 
 
-        let player = new YT.Player ('player', {
-            height: '390',
-            width: '640',
+        let player = new YT.Player('player', {
+            height: '584',
+            width: '1038',
             videoId: match.video,
         });
 
@@ -876,6 +871,14 @@ function startApp() {
                     $('<td>').text(player.playerstats2018.losses),
                     $('<td>').text(player.playerstats2018.points)
                 )
+                .append($('<tr>')).append(
+                    $('<td>').text("2019"),
+                    $('<td>').text(player.playerstats2019.matches),
+                    $('<td>').text(player.playerstats2019.wins),
+                    $('<td>').text(player.playerstats2019.draws),
+                    $('<td>').text(player.playerstats2019.losses),
+                    $('<td>').text(player.playerstats2019.points)
+                )
             $('#viewSinglePlayer').append(name).append(singlePlayerTable);
         }
 
@@ -898,19 +901,19 @@ function startApp() {
 
             let playersMatches = []
 
-            for (match of matches){
-                if(match.team1.player1._id==player._id ||
-                    match.team1.player2._id==player._id ||
-                    match.team1.player3._id==player._id ||
-                    match.team1.player4._id==player._id ||
-                    match.team1.player5._id==player._id ||
-                    match.team1.player6._id==player._id ||
-                    match.team2.player1._id==player._id ||
-                    match.team2.player2._id==player._id ||
-                    match.team2.player3._id==player._id ||
-                    match.team2.player4._id==player._id ||
-                    match.team2.player5._id==player._id ||
-                    match.team2.player6._id==player._id
+            for (match of matches) {
+                if (match.team1.player1._id == player._id ||
+                    match.team1.player2._id == player._id ||
+                    match.team1.player3._id == player._id ||
+                    match.team1.player4._id == player._id ||
+                    match.team1.player5._id == player._id ||
+                    match.team1.player6._id == player._id ||
+                    match.team2.player1._id == player._id ||
+                    match.team2.player2._id == player._id ||
+                    match.team2.player3._id == player._id ||
+                    match.team2.player4._id == player._id ||
+                    match.team2.player5._id == player._id ||
+                    match.team2.player6._id == player._id
                 )
                     playersMatches.push(match)
             }
@@ -922,7 +925,7 @@ function startApp() {
                     '<th></th>' +
                     '<th></th>' +
                     '<th>Отбор 2</th>' +
-                    '<th>Дата</th>'+
+                    '<th>Дата</th>' +
                     '<th>Изход</th>'
                 ));
             let count = 1;
@@ -936,33 +939,33 @@ function startApp() {
                 //let editMatchLink = $('<a href="#">[Edit]</a>').click(editMatch.bind(this, match));
                 let showMatchLink = $('<a href="#"></a>').click(showSingleMatch.bind(this, match));
 
-                if(match.team1.player1._id==player._id ||
-                    match.team1.player2._id==player._id ||
-                    match.team1.player3._id==player._id ||
-                    match.team1.player4._id==player._id ||
-                    match.team1.player5._id==player._id ||
-                    match.team1.player6._id==player._id){
-                    if(Number(match.team1.result) > Number(match.team2.result)){
+                if (match.team1.player1._id == player._id ||
+                    match.team1.player2._id == player._id ||
+                    match.team1.player3._id == player._id ||
+                    match.team1.player4._id == player._id ||
+                    match.team1.player5._id == player._id ||
+                    match.team1.player6._id == player._id) {
+                    if (Number(match.team1.result) > Number(match.team2.result)) {
                         outcome = "Победа"
                     }
-                    else if (Number(match.team1.result) == Number(match.team2.result)){
+                    else if (Number(match.team1.result) == Number(match.team2.result)) {
                         outcome = "Равенство"
                     }
 
-                    else if(Number(match.team1.result) < Number(match.team2.result)){
+                    else if (Number(match.team1.result) < Number(match.team2.result)) {
                         outcome = "Загуба"
                     }
 
                 }
                 else {
-                    if(Number(match.team1.result) > Number(match.team2.result)){
+                    if (Number(match.team1.result) > Number(match.team2.result)) {
                         outcome = "Загуба"
                     }
-                    else if (Number(match.team1.result) == Number(match.team2.result)){
+                    else if (Number(match.team1.result) == Number(match.team2.result)) {
                         outcome = "Равенство"
                     }
 
-                    else if(Number(match.team1.result) < Number(match.team2.result)){
+                    else if (Number(match.team1.result) < Number(match.team2.result)) {
                         outcome = "Победа"
                     }
 
@@ -1073,11 +1076,11 @@ function startApp() {
 
                 $("#teamOnePlayerOne, #teamOnePlayerTwo, #teamOnePlayerThree, #teamOnePlayerFour, #teamOnePlayerFive, #teamOnePlayerSix, " +
                     "#teamTwoPlayerOne, #teamTwoPlayerTwo, #teamTwoPlayerThree, #teamTwoPlayerFour, #teamTwoPlayerFive, #teamTwoPlayerSix").append(
-                    $('<option>')
-                        .text(user.username)
-                        .val(user._id)
-                        .data("value", user)
-                );
+                        $('<option>')
+                            .text(user.username)
+                            .val(user._id)
+                            .data("value", user)
+                    );
             }
         }
     }
@@ -1085,19 +1088,19 @@ function startApp() {
     function newCalculateMatch(match) {
 
         let teamOneRank = Number(match.team1.player1.rank) +
-                          Number(match.team1.player2.rank) +
-                          Number(match.team1.player3.rank) +
-                          Number(match.team1.player4.rank) +
-                          Number(match.team1.player5.rank) +
-                          Number(match.team1.player6.rank);
-    
+            Number(match.team1.player2.rank) +
+            Number(match.team1.player3.rank) +
+            Number(match.team1.player4.rank) +
+            Number(match.team1.player5.rank) +
+            Number(match.team1.player6.rank);
+
         let teamTwoRank = Number(match.team2.player1.rank) +
-                          Number(match.team2.player2.rank) +
-                          Number(match.team2.player3.rank) +
-                          Number(match.team2.player4.rank) +
-                          Number(match.team2.player5.rank) +
-                          Number(match.team2.player6.rank);
-            
+            Number(match.team2.player2.rank) +
+            Number(match.team2.player3.rank) +
+            Number(match.team2.player4.rank) +
+            Number(match.team2.player5.rank) +
+            Number(match.team2.player6.rank);
+
         match.team1.player1.points = 0;
         match.team1.player2.points = 0;
         match.team1.player3.points = 0;
@@ -1110,341 +1113,348 @@ function startApp() {
         match.team2.player4.points = 0;
         match.team2.player5.points = 0;
         match.team2.player6.points = 0;
-        
-    
 
-    
-            for (let i = 1; i < 7; i++){
-                let rankTeamOne = 0;
-                let rankTeamTwo = 0;
-                let pointsTeamOne = 0;
-                let pointsTeamTwo = 0;
-                let winsTeamOne = 0;
-                let winsTeamTwo = 0;
-                let drawsTeamOne = 0;
-                let drawsTeamTwo = 0;
-                let lossesTeamOne = 0;
-                let lossesTeamTwo = 0;
-                let coefficientTeamOne = 0;
-                let coefficientTeamTwo = 0;
-    
-                let team1rank = (teamOneRank - Number(match.team1["player" +i].rank))*1.2;
-                let team2rank = teamTwoRank;
-                let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
-                let goalDifference = Math.abs(match.team1.result - match.team2.result);
-                if (goalDifference > 5) {
-                    goalDifference = 5;
-                }
-                let rankDifference = Math.abs(team1rank - team2rank);
-                if (rankDifference > 30) {
-                    rankDifference = 30;
-                }
-    
-                if (team1rank > team2rank) {
-                    //checks only the handicapped result;
-                    if (Number(match.team1.result) > (Number(match.team2.result) + handicap)) {
-                        rankTeamOne =  goalDifference - handicap;
-                        rankTeamTwo = - goalDifference + handicap;
-                    }
-                    else if (Number(match.team1.result) < (Number(match.team2.result) + handicap)) {
-                        rankTeamOne =  - goalDifference - handicap;
-                        rankTeamTwo =  goalDifference + handicap;
-                    }
-            
-                    //checks the actual result;
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        winsTeamOne = 1;
-                        lossesTeamTwo = 1;
-                        coefficientTeamOne = 15 / (15 + rankDifference);
-                        coefficientTeamTwo = (15 + rankDifference) / 15;
-                        pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        winsTeamTwo = 1;
-                        lossesTeamOne = 1;
-                        coefficientTeamOne = 15 / (15 + rankDifference);
-                        coefficientTeamTwo = (15 + rankDifference) / 15;
-                        pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) == Number(match.team2.result)) {
-                        drawsTeamOne = 1;
-                        drawsTeamTwo = 1;
-                        coefficientTeamOne = 15 / (15 + rankDifference);
-                        coefficientTeamTwo = (15 + rankDifference) / 15;
-                        pointsTeamOne = Math.round(5 * coefficientTeamOne);
-                        pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                }
-                else if (team1rank < team2rank) {
-            
-                    //checks the handicapped result only;
-                    if ((Number(match.team1.result) + handicap) > Number(match.team2.result)) {
-                        rankTeamOne = goalDifference + handicap;
-                        rankTeamTwo = - goalDifference - handicap;
-                    }
-                    else if ((Number(match.team1.result) + handicap) < Number(match.team2.result)) {
-                        rankTeamOne = - goalDifference + handicap;
-                        rankTeamTwo = + goalDifference - handicap;
-                    }
-            
-                    //checks the actual result;
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        winsTeamOne = 1;
-                        lossesTeamTwo = 1;
-                        coefficientTeamOne = (15 + rankDifference) / 15;
-                        coefficientTeamTwo = 15 / (15 + rankDifference);
-                        pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        winsTeamTwo = 1;
-                        lossesTeamOne = 1;
-                        coefficientTeamOne = (15 + rankDifference) / 15;
-                        coefficientTeamTwo = 15 / (15 + rankDifference);
-                        pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-            
-                    else if (Number(match.team1.result) == Number(match.team2.result)) {
-                        drawsTeamOne = 1;
-                        drawsTeamTwo = 1;
-                        coefficientTeamOne = (15 + rankDifference) / 15;
-                        coefficientTeamTwo = 15 / (15 + rankDifference);
-                        pointsTeamOne = Math.round(5 * coefficientTeamOne);
-                        pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                }
-                else if (team1rank == team2rank) {
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        rankTeamOne = + goalDifference;
-                        rankTeamTwo = - goalDifference;
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        rankTeamOne = - goalDifference;
-                        rankTeamTwo = + goalDifference;
-                    }
-            
-                    //checks the actual result;
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        winsTeamOne = 1;
-                        lossesTeamTwo = 1;
-                        pointsTeamOne = 10 + goalDifference;
-                        pointsTeamTwo = 5 - goalDifference;
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        winsTeamTwo = 1;
-                        lossesTeamOne = 1;
-                        pointsTeamOne = 5 - goalDifference;
-                        pointsTeamTwo = 10 + goalDifference;
-                        updatePlayer();
-                    }
-            
-                    else if (Number(match.team1.result) == Number(match.team2.result)) {
-                        drawsTeamOne = 1;
-                        drawsTeamTwo = 1;
-                        pointsTeamOne = 5;
-                        pointsTeamTwo = 5;
-                        updatePlayer();
-                    }
-                }
-    
-                function updatePlayer() {
-                        match.team1["player" +i].rank = Number(match.team1["player" +i].rank) + Number(rankTeamOne);
-                        match.team1["player" +i].playerstats2019.points = Number(match.team1["player" +i].playerstats2019.points) + Number(Math.round(pointsTeamOne));
-                        match.team1["player" +i].playerstats2019.matches = Number(match.team1["player" +i].playerstats2019.matches) + 1;
-                        match.team1["player" +i].playerstats2019.wins = Number(match.team1["player" +i].playerstats2019.wins) + Number(winsTeamOne);
-                        match.team1["player" +i].playerstats2019.draws = Number(match.team1["player" +i].playerstats2019.draws) + Number(drawsTeamOne);
-                        match.team1["player" +i].playerstats2019.losses = Number(match.team1["player" +i].playerstats2019.losses) + Number(lossesTeamOne);
-                        $.ajax({
-                            method: "PUT",
-                            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team1["player" +i]._id,
-                            headers: getKinveyUserAuthHeaders(),
-                            data: match.team1["player" +i],
-                            success: console.log("success"),
-                            error: handleAjaxError
-                        });
-                    }      
-                }
+
+
+
+        for (let i = 1; i < 7; i++) {
+            let rankTeamOne = 0;
+            let rankTeamTwo = 0;
+            let pointsTeamOne = 0;
+            let pointsTeamTwo = 0;
+            let winsTeamOne = 0;
+            let winsTeamTwo = 0;
+            let drawsTeamOne = 0;
+            let drawsTeamTwo = 0;
+            let lossesTeamOne = 0;
+            let lossesTeamTwo = 0;
+            let coefficientTeamOne = 0;
+            let coefficientTeamTwo = 0;
+
+            let team1rank = teamOneRank - Number(match.team1["player" + i].rank);
+            let team2rank = teamTwoRank*5/6;
+            let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
+            if (handicap > 3) {
+                handicap = 3;
+              }
+            let goalDifference = Math.abs(match.team1.result - match.team2.result);
+            if (goalDifference > 5) {
+                goalDifference = 5;
+            }
+            let rankDifference = Math.abs(team1rank - team2rank);
+            if (rankDifference > 300) {
+                rankDifference = 300;
+            }
         
-    
-            for (let i = 1; i < 7; i++){
-                let rankTeamOne = 0;
-                let rankTeamTwo = 0;
-                let pointsTeamOne = 0;
-                let pointsTeamTwo = 0;
-                let winsTeamOne = 0;
-                let winsTeamTwo = 0;
-                let drawsTeamOne = 0;
-                let drawsTeamTwo = 0;
-                let lossesTeamOne = 0;
-                let lossesTeamTwo = 0;
-                let coefficientTeamOne = 0;
-                let coefficientTeamTwo = 0;
-    
-                let team2rank = (teamTwoRank - Number(match.team2["player" +i].rank))*1.2;
-                let team1rank = teamOneRank;
-                let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
-                let goalDifference = Math.abs(match.team1.result - match.team2.result);
-                if (goalDifference > 5) {
-                    goalDifference = 5;
+
+            if (team1rank > team2rank) {
+                //checks only the handicapped result;
+                if (Number(match.team1.result) > (Number(match.team2.result) + handicap)) {
+                    rankTeamOne = goalDifference - handicap;
+                    rankTeamTwo = - goalDifference + handicap;
                 }
-                let rankDifference = Math.abs(team1rank - team2rank);
-                if (rankDifference > 30) {
-                    rankDifference = 30;
+                else if (Number(match.team1.result) < (Number(match.team2.result) + handicap)) {
+                    rankTeamOne = - goalDifference - handicap;
+                    rankTeamTwo = goalDifference + handicap;
                 }
 
-    
-                if (team1rank > team2rank) {
-                    //checks only the handicapped result;
-                    if (Number(match.team1.result) > (Number(match.team2.result) + handicap)) {
-                        rankTeamOne =  goalDifference - handicap;
-                        rankTeamTwo = - goalDifference + handicap;
-                    }
-                    else if (Number(match.team1.result) < (Number(match.team2.result) + handicap)) {
-                        rankTeamOne =  - goalDifference - handicap;
-                        rankTeamTwo =  goalDifference + handicap;
-                    }
-            
-                    //checks the actual result;
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        winsTeamOne = 1;
-                        lossesTeamTwo = 1;
-                        coefficientTeamOne = 15 / (15 + rankDifference);
-                        coefficientTeamTwo = (15 + rankDifference) / 15;
-                        pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        winsTeamTwo = 1;
-                        lossesTeamOne = 1;
-                        coefficientTeamOne = 15 / (15 + rankDifference);
-                        coefficientTeamTwo = (15 + rankDifference) / 15;
-                        pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) == Number(match.team2.result)) {
-                        drawsTeamOne = 1;
-                        drawsTeamTwo = 1;
-                        coefficientTeamOne = 15 / (15 + rankDifference);
-                        coefficientTeamTwo = (15 + rankDifference) / 15;
-                        pointsTeamOne = Math.round(5 * coefficientTeamOne);
-                        pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
-                        updatePlayer();
-                    }
+                //checks the actual result;
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    winsTeamOne = 1;
+                    lossesTeamTwo = 1;
+                    coefficientTeamOne = 150 / (150 + rankDifference);
+                    coefficientTeamTwo = (150 + rankDifference) / 150;
+                    pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
                 }
-                else if (team1rank < team2rank) {
-            
-                    //checks the handicapped result only;
-                    if ((Number(match.team1.result) + handicap) > Number(match.team2.result)) {
-                        rankTeamOne = goalDifference + handicap;
-                        rankTeamTwo = - goalDifference - handicap;
-                    }
-                    else if ((Number(match.team1.result) + handicap) < Number(match.team2.result)) {
-                        rankTeamOne = - goalDifference + handicap;
-                        rankTeamTwo = + goalDifference - handicap;
-                    }
-            
-                    //checks the actual result;
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        winsTeamOne = 1;
-                        lossesTeamTwo = 1;
-                        coefficientTeamOne = (15 + rankDifference) / 15;
-                        coefficientTeamTwo = 15 / (15 + rankDifference);
-                        pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        winsTeamTwo = 1;
-                        lossesTeamOne = 1;
-                        coefficientTeamOne = (15 + rankDifference) / 15;
-                        coefficientTeamTwo = 15 / (15 + rankDifference);
-                        pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
-                        pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
-                        updatePlayer();
-                    }
-            
-                    else if (Number(match.team1.result) == Number(match.team2.result)) {
-                        drawsTeamOne = 1;
-                        drawsTeamTwo = 1;
-                        coefficientTeamOne = (15 + rankDifference) / 15;
-                        coefficientTeamTwo = 15 / (15 + rankDifference);
-                        pointsTeamOne = Math.round(5 * coefficientTeamOne);
-                        pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
-                        updatePlayer();
-                    }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    winsTeamTwo = 1;
+                    lossesTeamOne = 1;
+                    coefficientTeamOne = 150 / (150 + rankDifference);
+                    coefficientTeamTwo = (150 + rankDifference) / 150;
+                    pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
                 }
-                else if (team1rank == team2rank) {
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        rankTeamOne = goalDifference;
-                        rankTeamTwo = - goalDifference;
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        rankTeamOne = - goalDifference;
-                        rankTeamTwo = goalDifference;
-                    }
-            
-                    //checks the actual result;
-                    if (Number(match.team1.result) > Number(match.team2.result)) {
-                        winsTeamOne = 1;
-                        lossesTeamTwo = 1;
-                        coefficientTeamOne = 1;
-                        coefficientTeamTwo = 1;
-                        pointsTeamOne = 10 + goalDifference;
-                        pointsTeamTwo = 5 - goalDifference;
-                        updatePlayer();
-                    }
-                    else if (Number(match.team1.result) < Number(match.team2.result)) {
-                        winsTeamTwo = 1;
-                        lossesTeamOne = 1;
-                        coefficientTeamOne = 1;
-                        coefficientTeamTwo = 1;
-                        pointsTeamOne = 5 - goalDifference;
-                        pointsTeamTwo = 10 + goalDifference;
-                        updatePlayer();
-                    }
-            
-                    else if (Number(match.team1.result) == Number(match.team2.result)) {
-                        drawsTeamOne = 1;
-                        drawsTeamTwo = 1;
-                        coefficientTeamOne = 1;
-                        coefficientTeamTwo = 1;
-                        pointsTeamOne = 5;
-                        pointsTeamTwo = 5;
-                        updatePlayer();
-                    }
+                else if (Number(match.team1.result) == Number(match.team2.result)) {
+                    drawsTeamOne = 1;
+                    drawsTeamTwo = 1;
+                    coefficientTeamOne = 150 / (150 + rankDifference);
+                    coefficientTeamTwo = (150 + rankDifference) / 150;
+                    pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                    pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                    updatePlayer();
                 }
-    
-                function updatePlayer() {
-                        match.team2["player" +i].rank = Number(match.team2["player" +i].rank) + Number(rankTeamTwo);
-                        match.team2["player" +i].playerstats2019.points = Number(match.team2["player" +i].playerstats2019.points) + Number(Math.round(pointsTeamTwo));
-                        match.team2["player" +i].playerstats2019.matches = Number(match.team2["player" +i].playerstats2019.matches) + 1;
-                        match.team2["player" +i].playerstats2019.wins = Number(match.team2["player" +i].playerstats2019.wins) + Number(winsTeamTwo);
-                        match.team2["player" +i].playerstats2019.draws = Number(match.team2["player" +i].playerstats2019.draws) + Number(drawsTeamTwo);
-                        match.team2["player" +i].playerstats2019.losses = Number(match.team2["player" +i].playerstats2019.losses) + Number(lossesTeamTwo);
-                        $.ajax({
-                            method: "PUT",
-                            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team1["player" +i]._id,
-                            headers: getKinveyUserAuthHeaders(),
-                            data: match.team1["player" +i],
-                            success: console.log("success"),
-                            error: handleAjaxError
-                        });
-                    }      
+            }
+            else if (team1rank < team2rank) {
+
+                //checks the handicapped result only;
+                if ((Number(match.team1.result) + handicap) > Number(match.team2.result)) {
+                    rankTeamOne = goalDifference + handicap;
+                    rankTeamTwo = - goalDifference - handicap;
                 }
-            
-    
+                else if ((Number(match.team1.result) + handicap) < Number(match.team2.result)) {
+                    rankTeamOne = - goalDifference + handicap;
+                    rankTeamTwo = + goalDifference - handicap;
+                }
+
+                //checks the actual result;
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    winsTeamOne = 1;
+                    lossesTeamTwo = 1;
+                    coefficientTeamOne = (150 + rankDifference) / 150;
+                    coefficientTeamTwo = 150 / (150 + rankDifference);
+                    pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    winsTeamTwo = 1;
+                    lossesTeamOne = 1;
+                    coefficientTeamOne = (150 + rankDifference) / 150;
+                    coefficientTeamTwo = 150 / (150 + rankDifference);
+                    pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
+                }
+
+                else if (Number(match.team1.result) == Number(match.team2.result)) {
+                    drawsTeamOne = 1;
+                    drawsTeamTwo = 1;
+                    coefficientTeamOne = (150 + rankDifference) / 150;
+                    coefficientTeamTwo = 150 / (150 + rankDifference);
+                    pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                    pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                    updatePlayer();
+                }
+            }
+            else if (team1rank == team2rank) {
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    rankTeamOne = + goalDifference;
+                    rankTeamTwo = - goalDifference;
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    rankTeamOne = - goalDifference;
+                    rankTeamTwo = + goalDifference;
+                }
+
+                //checks the actual result;
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    winsTeamOne = 1;
+                    lossesTeamTwo = 1;
+                    pointsTeamOne = 10 + goalDifference;
+                    pointsTeamTwo = 5 - goalDifference;
+                    updatePlayer();
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    winsTeamTwo = 1;
+                    lossesTeamOne = 1;
+                    pointsTeamOne = 5 - goalDifference;
+                    pointsTeamTwo = 10 + goalDifference;
+                    updatePlayer();
+                }
+
+                else if (Number(match.team1.result) == Number(match.team2.result)) {
+                    drawsTeamOne = 1;
+                    drawsTeamTwo = 1;
+                    pointsTeamOne = 5;
+                    pointsTeamTwo = 5;
+                    updatePlayer();
+                }
+            }
+            match.team1["player" + i].points = Number(Math.round(pointsTeamOne));
+
+            function updatePlayer() {
+                match.team1["player" + i].rank = Number(match.team1["player" + i].rank) + Number(rankTeamOne);
+                match.team1["player" + i].playerstats2019.points = Number(match.team1["player" + i].playerstats2019.points) + Number(Math.round(pointsTeamOne));
+                match.team1["player" + i].playerstats2019.matches = Number(match.team1["player" + i].playerstats2019.matches) + 1;
+                match.team1["player" + i].playerstats2019.wins = Number(match.team1["player" + i].playerstats2019.wins) + Number(winsTeamOne);
+                match.team1["player" + i].playerstats2019.draws = Number(match.team1["player" + i].playerstats2019.draws) + Number(drawsTeamOne);
+                match.team1["player" + i].playerstats2019.losses = Number(match.team1["player" + i].playerstats2019.losses) + Number(lossesTeamOne);
+                $.ajax({
+                    method: "PUT",
+                    url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team1["player" + i]._id,
+                    headers: getKinveyUserAuthHeaders(),
+                    data: match.team1["player" + i],
+                    error: handleAjaxError
+                });
+            }
+        }
+
+
+        for (let i = 1; i < 7; i++) {
+            let rankTeamOne = 0;
+            let rankTeamTwo = 0;
+            let pointsTeamOne = 0;
+            let pointsTeamTwo = 0;
+            let winsTeamOne = 0;
+            let winsTeamTwo = 0;
+            let drawsTeamOne = 0;
+            let drawsTeamTwo = 0;
+            let lossesTeamOne = 0;
+            let lossesTeamTwo = 0;
+            let coefficientTeamOne = 0;
+            let coefficientTeamTwo = 0;
+
+            let team2rank = teamTwoRank - Number(match.team2["player" + i].rank);
+            let team1rank = teamOneRank*5/6;
+            let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
+            if (handicap > 3) {
+                handicap = 3;
+              }
+            let goalDifference = Math.abs(match.team1.result - match.team2.result);
+            if (goalDifference > 5) {
+                goalDifference = 5;
+            }
+            let rankDifference = Math.abs(team1rank - team2rank);
+            if (rankDifference > 300) {
+                rankDifference = 300;
+            }
+
+
+            if (team1rank > team2rank) {
+                //checks only the handicapped result;
+                if (Number(match.team1.result) > (Number(match.team2.result) + handicap)) {
+                    rankTeamOne = goalDifference - handicap;
+                    rankTeamTwo = - goalDifference + handicap;
+                }
+                else if (Number(match.team1.result) < (Number(match.team2.result) + handicap)) {
+                    rankTeamOne = - goalDifference - handicap;
+                    rankTeamTwo = goalDifference + handicap;
+                }
+
+                //checks the actual result;
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    winsTeamOne = 1;
+                    lossesTeamTwo = 1;
+                    coefficientTeamOne = 150 / (150 + rankDifference);
+                    coefficientTeamTwo = (150 + rankDifference) / 150;
+                    pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    winsTeamTwo = 1;
+                    lossesTeamOne = 1;
+                    coefficientTeamOne = 150 / (150 + rankDifference);
+                    coefficientTeamTwo = (150 + rankDifference) / 150;
+                    pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
+                }
+                else if (Number(match.team1.result) == Number(match.team2.result)) {
+                    drawsTeamOne = 1;
+                    drawsTeamTwo = 1;
+                    coefficientTeamOne = 150 / (150 + rankDifference);
+                    coefficientTeamTwo = (150 + rankDifference) / 150;
+                    pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                    pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                    updatePlayer();
+                }
+            }
+            else if (team1rank < team2rank) {
+
+                //checks the handicapped result only;
+                if ((Number(match.team1.result) + handicap) > Number(match.team2.result)) {
+                    rankTeamOne = goalDifference + handicap;
+                    rankTeamTwo = - goalDifference - handicap;
+                }
+                else if ((Number(match.team1.result) + handicap) < Number(match.team2.result)) {
+                    rankTeamOne = - goalDifference + handicap;
+                    rankTeamTwo = + goalDifference - handicap;
+                }
+
+                //checks the actual result;
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    winsTeamOne = 1;
+                    lossesTeamTwo = 1;
+                    coefficientTeamOne = (150 + rankDifference) / 150;
+                    coefficientTeamTwo = 150 / (150 + rankDifference);
+                    pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    winsTeamTwo = 1;
+                    lossesTeamOne = 1;
+                    coefficientTeamOne = (150 + rankDifference) / 150;
+                    coefficientTeamTwo = 150 / (150 + rankDifference);
+                    pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                    pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                    updatePlayer();
+                }
+
+                else if (Number(match.team1.result) == Number(match.team2.result)) {
+                    drawsTeamOne = 1;
+                    drawsTeamTwo = 1;
+                    coefficientTeamOne = (150 + rankDifference) / 150;
+                    coefficientTeamTwo = 150 / (150 + rankDifference);
+                    pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                    pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                    updatePlayer();
+                }
+            }
+            else if (team1rank == team2rank) {
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    rankTeamOne = goalDifference;
+                    rankTeamTwo = - goalDifference;
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    rankTeamOne = - goalDifference;
+                    rankTeamTwo = goalDifference;
+                }
+
+                //checks the actual result;
+                if (Number(match.team1.result) > Number(match.team2.result)) {
+                    winsTeamOne = 1;
+                    lossesTeamTwo = 1;
+                    coefficientTeamOne = 1;
+                    coefficientTeamTwo = 1;
+                    pointsTeamOne = 10 + goalDifference;
+                    pointsTeamTwo = 5 - goalDifference;
+                    updatePlayer();
+                }
+                else if (Number(match.team1.result) < Number(match.team2.result)) {
+                    winsTeamTwo = 1;
+                    lossesTeamOne = 1;
+                    coefficientTeamOne = 1;
+                    coefficientTeamTwo = 1;
+                    pointsTeamOne = 5 - goalDifference;
+                    pointsTeamTwo = 10 + goalDifference;
+                    updatePlayer();
+                }
+
+                else if (Number(match.team1.result) == Number(match.team2.result)) {
+                    drawsTeamOne = 1;
+                    drawsTeamTwo = 1;
+                    coefficientTeamOne = 1;
+                    coefficientTeamTwo = 1;
+                    pointsTeamOne = 5;
+                    pointsTeamTwo = 5;
+                    updatePlayer();
+                }
+            }
+            match.team2["player" + i].points = Number(Math.round(pointsTeamTwo));
+
+            function updatePlayer() {
+                match.team2["player" + i].rank = Number(match.team2["player" + i].rank) + Number(rankTeamTwo);
+                match.team2["player" + i].playerstats2019.points = Number(match.team2["player" + i].playerstats2019.points) + Number(Math.round(pointsTeamTwo));
+                match.team2["player" + i].playerstats2019.matches = Number(match.team2["player" + i].playerstats2019.matches) + 1;
+                match.team2["player" + i].playerstats2019.wins = Number(match.team2["player" + i].playerstats2019.wins) + Number(winsTeamTwo);
+                match.team2["player" + i].playerstats2019.draws = Number(match.team2["player" + i].playerstats2019.draws) + Number(drawsTeamTwo);
+                match.team2["player" + i].playerstats2019.losses = Number(match.team2["player" + i].playerstats2019.losses) + Number(lossesTeamTwo);
+                $.ajax({
+                    method: "PUT",
+                    url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team1["player" + i]._id,
+                    headers: getKinveyUserAuthHeaders(),
+                    data: match.team1["player" + i],
+                    error: handleAjaxError
+                });
+            }
+        }
+
+
         $.ajax({
             method: "POST",
             url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/matches",
@@ -1470,16 +1480,16 @@ function startApp() {
         match.team2.player5.points = 11;
         match.team2.player6.points = 12;
 
-        for (let player in match.team1 ){
-            
-            if(match.hasOwnProperty('date')){
+        for (let player in match.team1) {
+
+            if (match.hasOwnProperty('date')) {
                 console
             }
 
             console.log(match.team1[player]._id)
         }
 
-  
+
 
         $.ajax({
             method: "POST",
@@ -1492,7 +1502,7 @@ function startApp() {
         });
     }
 
-    function resetStats(){
+    function resetStats() {
 
         $.ajax({
             method: "GET",
@@ -1503,11 +1513,6 @@ function startApp() {
         });
         function userForResetLoaded(player) {
             player.rank = Number(1000);
-            player.playerstats.points = Number(0);
-            player.playerstats.matches = Number(0);
-            player.playerstats.wins = Number(0);
-            player.playerstats.draws = Number(0);
-            player.playerstats.losses = Number(0);
             player.playerstats2017.points = Number(0);
             player.playerstats2017.matches = Number(0);
             player.playerstats2017.wins = Number(0);
@@ -1535,17 +1540,18 @@ function startApp() {
         }
     }
 
-    function resetStatsSingleUserTest(){
+    function resetStatsSingleUserTest() {
 
         $.ajax({
             method: "GET",
-            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/5a96ace7643581752781070b",
+            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/5c49afb9e38d244f756a97a6",
             headers: getKinveyUserAuthHeaders(),
             success: userForResetLoaded,
             error: handleAjaxError
         });
         function userForResetLoaded(player) {
-            player.rank = Number(0);
+            player.rank = Number(1000);
+            player.playerstats = {};
             player.playerstats2017 = {
                 points: Number(0),
                 matches: Number(0),
@@ -1570,7 +1576,7 @@ function startApp() {
 
             $.ajax({
                 method: "PUT",
-                url: kinveyBaseUrl + "user/" + kinveyAppKey + "/5a96ace7643581752781070b",
+                url: kinveyBaseUrl + "user/" + kinveyAppKey + "/5c49afb9e38d244f756a97a6",
                 headers: getKinveyUserAuthHeaders(),
                 data: player,
                 success: console.log(player),
@@ -1579,7 +1585,23 @@ function startApp() {
         }
     }
 
-    function resetStatsOfTest2017(){
+    function testMatchDate() {
+        $.ajax({
+            method: "GET",
+            url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/matches/" + "5c497c89fe0fd832d63c0a61",
+            headers: getKinveyUserAuthHeaders(),
+            success: matchLoaded,
+            error: handleAjaxError
+        });
+
+        function matchLoaded(match) {
+            let date = match.date;
+            let year = date.slice(0, 4);
+            console.log(year);
+        };
+    }
+
+    function resetStatsOfTest2017() {
 
         $.ajax({
             method: "GET",
@@ -1645,18 +1667,35 @@ function startApp() {
 
             for (let player of players) {
 
-                player.playerstats.rank = 1000;
-                player.playerstats.points = 0;
-                player.playerstats.matches = 0;
-                player.playerstats.wins = 0;
-                player.playerstats.draws = 0;
-                player.playerstats.losses = 0;
+                player.rank = Number(1000);
+                player.playerstats = {};
+                player.playerstats2017 = {
+                    points: Number(0),
+                    matches: Number(0),
+                    wins: Number(0),
+                    draws: Number(0),
+                    losses: Number(0)
+                };
+                player.playerstats2018 = {
+                    points: Number(0),
+                    matches: Number(0),
+                    wins: Number(0),
+                    draws: Number(0),
+                    losses: Number(0)
+                };
+                player.playerstats2019 = {
+                    points: Number(0),
+                    matches: Number(0),
+                    wins: Number(0),
+                    draws: Number(0),
+                    losses: Number(0)
+                };
 
                 playersMap.set(player._id, player);
             }
 
             for (let [k, v] of playersMap) {
-                // console.log(k + ' -> ' + v.points);
+
             }
 
             $.ajax({
@@ -1671,258 +1710,403 @@ function startApp() {
 
                 matches.sort(function (a, b) {
                     return new Date(a.date) - new Date(b.date)
-                });
-
-                for (let match of matches) {
-
-                    match.team1.player1.playerstats = playersMap.get(match.team1.player1._id).playerstats;
-                    match.team1.player2.playerstats = playersMap.get(match.team1.player2._id).playerstats;
-                    match.team1.player3.playerstats = playersMap.get(match.team1.player3._id).playerstats;
-                    match.team1.player4.playerstats = playersMap.get(match.team1.player4._id).playerstats;
-                    match.team1.player5.playerstats = playersMap.get(match.team1.player5._id).playerstats;
-                    match.team1.player6.playerstats = playersMap.get(match.team1.player6._id).playerstats;
-
-                    match.team2.player1.playerstats = playersMap.get(match.team2.player1._id).playerstats;
-                    match.team2.player2.playerstats = playersMap.get(match.team2.player2._id).playerstats;
-                    match.team2.player3.playerstats = playersMap.get(match.team2.player3._id).playerstats;
-                    match.team2.player4.playerstats = playersMap.get(match.team2.player4._id).playerstats;
-                    match.team2.player5.playerstats = playersMap.get(match.team2.player5._id).playerstats;
-                    match.team2.player6.playerstats = playersMap.get(match.team2.player6._id).playerstats;
-
-
-
-
-
-                    let team1rank = Number(match.team1.player1.playerstats.rank) +
-                        Number(match.team1.player2.playerstats.rank) +
-                        Number(match.team1.player3.playerstats.rank) +
-                        Number(match.team1.player4.playerstats.rank) +
-                        Number(match.team1.player5.playerstats.rank) +
-                        Number(match.team1.player6.playerstats.rank);
-
-                    let team2rank = Number(match.team2.player1.playerstats.rank) +
-                        Number(match.team2.player2.playerstats.rank) +
-                        Number(match.team2.player3.playerstats.rank) +
-                        Number(match.team2.player4.playerstats.rank) +
-                        Number(match.team2.player5.playerstats.rank) +
-                        Number(match.team2.player6.playerstats.rank);
-
-                    //console.log(team1rank);
-                    //console.log(team2rank)
-
-
-                    let handicap = Math.round((Math.abs(team1rank - team2rank) / 50));
-
-                    let goalDifference = Math.abs(match.team1.result - match.team2.result);
-                    if (goalDifference > 5) {
+                  });
+                  for (let match of matches) {
+    
+                    let date = match.date;
+                    let year = date.slice(0, 4);
+    
+                    let playersForUpdate = {};
+                    playersForUpdate.team1 = {};
+                    playersForUpdate.team2 = {};
+    
+                    playersForUpdate.team1.player1={}
+                    playersForUpdate.team1.player2={}
+                    playersForUpdate.team1.player3={}
+                    playersForUpdate.team1.player4={}
+                    playersForUpdate.team1.player5={}
+                    playersForUpdate.team1.player6={}
+                    playersForUpdate.team2.player1={}
+                    playersForUpdate.team2.player2={}
+                    playersForUpdate.team2.player3={}
+                    playersForUpdate.team2.player4={}
+                    playersForUpdate.team2.player5={}
+                    playersForUpdate.team2.player6={}
+    
+                    playersForUpdate.team1.player1["playerstats" + year]={}
+                    playersForUpdate.team1.player2["playerstats" + year]={}
+                    playersForUpdate.team1.player3["playerstats" + year]={}
+                    playersForUpdate.team1.player4["playerstats" + year]={}
+                    playersForUpdate.team1.player5["playerstats" + year]={}
+                    playersForUpdate.team1.player6["playerstats" + year]={}
+                    playersForUpdate.team2.player1["playerstats" + year]={}
+                    playersForUpdate.team2.player2["playerstats" + year]={}
+                    playersForUpdate.team2.player3["playerstats" + year]={}
+                    playersForUpdate.team2.player4["playerstats" + year]={}
+                    playersForUpdate.team2.player5["playerstats" + year]={}
+                    playersForUpdate.team2.player6["playerstats" + year]={}
+    
+     
+                    playersForUpdate.team1.player1 = playersMap.get(match.team1.player1._id);
+                    playersForUpdate.team1.player2 = playersMap.get(match.team1.player2._id);
+                    playersForUpdate.team1.player3 = playersMap.get(match.team1.player3._id);
+                    playersForUpdate.team1.player4 = playersMap.get(match.team1.player4._id);
+                    playersForUpdate.team1.player5 = playersMap.get(match.team1.player5._id);
+                    playersForUpdate.team1.player6 = playersMap.get(match.team1.player6._id);
+                    playersForUpdate.team1.result = match.team1.result;
+    
+                    playersForUpdate.team2.player1 = playersMap.get(match.team2.player1._id);
+                    playersForUpdate.team2.player2 = playersMap.get(match.team2.player2._id);
+                    playersForUpdate.team2.player3 = playersMap.get(match.team2.player3._id);
+                    playersForUpdate.team2.player4 = playersMap.get(match.team2.player4._id);
+                    playersForUpdate.team2.player5 = playersMap.get(match.team2.player5._id);
+                    playersForUpdate.team2.player6 = playersMap.get(match.team2.player6._id);
+                    playersForUpdate.team2.result = match.team2.result;
+    
+                    let teamOneRank = Number(playersForUpdate.team1.player1.rank) +
+                      Number(playersForUpdate.team1.player2.rank) +
+                      Number(playersForUpdate.team1.player3.rank) +
+                      Number(playersForUpdate.team1.player4.rank) +
+                      Number(playersForUpdate.team1.player5.rank) +
+                      Number(playersForUpdate.team1.player6.rank);
+    
+                    let teamTwoRank = Number(playersForUpdate.team2.player1.rank) +
+                      Number(playersForUpdate.team2.player2.rank) +
+                      Number(playersForUpdate.team2.player3.rank) +
+                      Number(playersForUpdate.team2.player4.rank) +
+                      Number(playersForUpdate.team2.player5.rank) +
+                      Number(playersForUpdate.team2.player6.rank);
+    
+                    match.team1.rank = Number(teamOneRank);
+                    match.team2.rank = Number(teamTwoRank);
+    
+                    for (let i = 1; i < 7; i++) {
+                      let rankTeamOne = 0;
+                      let rankTeamTwo = 0;
+                      let pointsTeamOne = 0;
+                      let pointsTeamTwo = 0;
+                      let winsTeamOne = 0;
+                      let winsTeamTwo = 0;
+                      let drawsTeamOne = 0;
+                      let drawsTeamTwo = 0;
+                      let lossesTeamOne = 0;
+                      let lossesTeamTwo = 0;
+                      let coefficientTeamOne = 0;
+                      let coefficientTeamTwo = 0;
+    
+                      let team1rank = teamOneRank - Number(playersForUpdate.team1["player" + i].rank);
+                      let team2rank = teamTwoRank*5/6;
+                      let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
+                      if (handicap > 3) {
+                        handicap = 3;
+                      }
+                      let goalDifference = Math.abs(playersForUpdate.team1.result - playersForUpdate.team2.result);
+                      if (goalDifference > 5) {
                         goalDifference = 5;
-                    }
-                    let rankDifference = Math.abs(team1rank - team2rank);
-                    if (rankDifference > 300) {
+                      }
+                      let rankDifference = Math.abs(team1rank - team2rank);
+           
+                      if (rankDifference > 300) {
                         rankDifference = 300;
-                    }
-
-                    let rankTeamOne = 0;
-                    let rankTeamTwo = 0;
-                    let pointsTeamOne = 0;
-                    let pointsTeamTwo = 0;
-                    let winsTeamOne = 0;
-                    let winsTeamTwo = 0;
-                    let drawsTeamOne = 0;
-                    let drawsTeamTwo = 0;
-                    let lossesTeamOne = 0;
-                    let lossesTeamTwo = 0;
-                    let coefficientTeamOne = 0;
-                    let coefficientTeamTwo = 0;
-
-                    function updatePlayersMap() {
-
-                        let playersForUpdateTeam1 = [];
-                        let playersForUpdateTeam2 = [];
-
-                        playersForUpdateTeam1.push(match.team1.player1);
-                        playersForUpdateTeam1.push(match.team1.player2);
-                        playersForUpdateTeam1.push(match.team1.player3);
-                        playersForUpdateTeam1.push(match.team1.player4);
-                        playersForUpdateTeam1.push(match.team1.player5);
-                        playersForUpdateTeam1.push(match.team1.player6);
-
-                        playersForUpdateTeam2.push(match.team2.player1);
-                        playersForUpdateTeam2.push(match.team2.player2);
-                        playersForUpdateTeam2.push(match.team2.player3);
-                        playersForUpdateTeam2.push(match.team2.player4);
-                        playersForUpdateTeam2.push(match.team2.player5);
-                        playersForUpdateTeam2.push(match.team2.player6);
-
-                        for (let i = 0; i < 6; i++) {
-                            playersForUpdateTeam1[i].playerstats.rank = Number(playersForUpdateTeam1[i].playerstats.rank) + Number(rankTeamOne);
-                            playersForUpdateTeam1[i].playerstats.points = Number(playersForUpdateTeam1[i].playerstats.points) + Number(Math.round(pointsTeamOne));
-                            playersForUpdateTeam1[i].playerstats.matches = Number(playersForUpdateTeam1[i].playerstats.matches) + 1;
-                            playersForUpdateTeam1[i].playerstats.wins = Number(playersForUpdateTeam1[i].playerstats.wins) + Number(winsTeamOne);
-                            playersForUpdateTeam1[i].playerstats.draws = Number(playersForUpdateTeam1[i].playerstats.draws) + Number(drawsTeamOne);
-                            playersForUpdateTeam1[i].playerstats.losses = Number(playersForUpdateTeam1[i].playerstats.losses) + Number(lossesTeamOne);
-
-                            playersMap.set(playersForUpdateTeam1[i]._id, playersForUpdateTeam1[i]);
-                        }
-
-                        for (let i = 0; i < 6; i++) {
-                            playersForUpdateTeam2[i].playerstats.rank = Number(playersForUpdateTeam2[i].playerstats.rank) + Number(rankTeamTwo);
-                            playersForUpdateTeam2[i].playerstats.points = Number(playersForUpdateTeam2[i].playerstats.points) + Number(Math.round(pointsTeamTwo));
-                            playersForUpdateTeam2[i].playerstats.matches = Number(playersForUpdateTeam2[i].playerstats.matches) + 1;
-                            playersForUpdateTeam2[i].playerstats.wins = Number(playersForUpdateTeam2[i].playerstats.wins) + Number(winsTeamTwo);
-                            playersForUpdateTeam2[i].playerstats.draws = Number(playersForUpdateTeam2[i].playerstats.draws) + Number(drawsTeamTwo);
-                            playersForUpdateTeam2[i].playerstats.losses = Number(playersForUpdateTeam2[i].playerstats.losses) + Number(lossesTeamTwo);
-
-                            playersMap.set(playersForUpdateTeam2[i]._id, playersForUpdateTeam2[i]);
-
-                        }
-
-                        resetStats();
-                    }
-
-
-                    if (team1rank > team2rank) {
-
+                      }
+    
+                      if (team1rank > team2rank) {
                         //checks only the handicapped result;
-                        if (Number(match.team1.result) > (Number(match.team2.result) + handicap)) {
-                            rankTeamOne = 10 + goalDifference - handicap;
-                            rankTeamTwo = -10 - goalDifference + handicap;
+                        if (Number(playersForUpdate.team1.result) > (Number(playersForUpdate.team2.result) + handicap)) {
+                          rankTeamOne = goalDifference - handicap;
+                          rankTeamTwo = - goalDifference + handicap;
                         }
-                        else if (Number(match.team1.result) < (Number(match.team2.result) + handicap)) {
-                            rankTeamOne = -10 - goalDifference - handicap;
-                            rankTeamTwo = 10 + goalDifference + handicap;
+                        else if (Number(playersForUpdate.team1.result) < (Number(playersForUpdate.team2.result) + handicap)) {
+                          rankTeamOne = - goalDifference - handicap;
+                          rankTeamTwo = goalDifference + handicap;
                         }
-
                         //checks the actual result;
-                        if (Number(match.team1.result) > Number(match.team2.result)) {
-                            winsTeamOne = 1;
-                            lossesTeamTwo = 1;
-                            coefficientTeamOne = 150 / (150 + rankDifference);
-                            coefficientTeamTwo = (150 + rankDifference) / 150;
-                            pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
-                            pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
-                            updatePlayersMap();
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          winsTeamOne = 1;
+                          lossesTeamTwo = 1;
+                          coefficientTeamOne = 150 / (150 + rankDifference);
+                          coefficientTeamTwo = (150 + rankDifference) / 150;
+                          pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
                         }
-                        else if (Number(match.team1.result) < Number(match.team2.result)) {
-                            winsTeamTwo = 1;
-                            lossesTeamOne = 1;
-                            coefficientTeamOne = 150 / (150 + rankDifference);
-                            coefficientTeamTwo = (150 + rankDifference) / 150;
-                            pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
-                            pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
-                            updatePlayersMap();
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          winsTeamTwo = 1;
+                          lossesTeamOne = 1;
+                          coefficientTeamOne = 150 / (150 + rankDifference);
+                          coefficientTeamTwo = (150 + rankDifference) / 150;
+                          pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
                         }
-                        else if (Number(match.team1.result) == Number(match.team2.result)) {
-                            drawsTeamOne = 1;
-                            drawsTeamTwo = 1;
-                            coefficientTeamOne = 150 / (150 + rankDifference);
-                            coefficientTeamTwo = (150 + rankDifference) / 150;
-                            pointsTeamOne = Math.round(5 * coefficientTeamOne);
-                            pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
-                            updatePlayersMap();
+                        else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
+                          drawsTeamOne = 1;
+                          drawsTeamTwo = 1;
+                          coefficientTeamOne = 150 / (150 + rankDifference);
+                          coefficientTeamTwo = (150 + rankDifference) / 150;
+                          pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                          pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                          updatePlayersMap();
                         }
-                    }
-                    else if (team1rank < team2rank) {
-
+                      }
+                      else if (team1rank < team2rank) {
                         //checks the handicapped result only;
-                        if ((Number(match.team1.result) + handicap) > Number(match.team2.result)) {
-                            rankTeamOne = 10 + goalDifference + handicap;
-                            rankTeamTwo = - 10 - goalDifference - handicap;
+                        if ((Number(playersForUpdate.team1.result) + handicap) > Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = goalDifference + handicap;
+                          rankTeamTwo = - goalDifference - handicap;
                         }
-                        else if ((Number(match.team1.result) + handicap) < Number(match.team2.result)) {
-                            rankTeamOne = -10 - goalDifference + handicap;
-                            rankTeamTwo = 10 + goalDifference - handicap;
+                        else if ((Number(playersForUpdate.team1.result) + handicap) < Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = - goalDifference + handicap;
+                          rankTeamTwo = + goalDifference - handicap;
                         }
-
                         //checks the actual result;
-                        if (Number(match.team1.result) > Number(match.team2.result)) {
-                            winsTeamOne = 1;
-                            lossesTeamTwo = 1;
-                            coefficientTeamOne = (150 + rankDifference) / 150;
-                            coefficientTeamTwo = 150 / (150 + rankDifference);
-                            pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
-                            pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
-                            updatePlayersMap();
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          winsTeamOne = 1;
+                          lossesTeamTwo = 1;
+                          coefficientTeamOne = (150 + rankDifference) / 150;
+                          coefficientTeamTwo = 150 / (150 + rankDifference);
+                          pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
                         }
-                        else if (Number(match.team1.result) < Number(match.team2.result)) {
-                            winsTeamTwo = 1;
-                            lossesTeamOne = 1;
-                            coefficientTeamOne = (150 + rankDifference) / 150;
-                            coefficientTeamTwo = 150 / (150 + rankDifference);
-                            pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
-                            pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
-                            updatePlayersMap();
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          winsTeamTwo = 1;
+                          lossesTeamOne = 1;
+                          coefficientTeamOne = (150 + rankDifference) / 150;
+                          coefficientTeamTwo = 150 / (150 + rankDifference);
+                          pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
                         }
-
-                        else if (Number(match.team1.result) == Number(match.team2.result)) {
-                            drawsTeamOne = 1;
-                            drawsTeamTwo = 1;
-                            coefficientTeamOne = (150 + rankDifference) / 150;
-                            coefficientTeamTwo = 150 / (150 + rankDifference);
-                            pointsTeamOne = Math.round(5 * coefficientTeamOne);
-                            pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
-                            updatePlayersMap();
+                        else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
+                          drawsTeamOne = 1;
+                          drawsTeamTwo = 1;
+                          coefficientTeamOne = (150 + rankDifference) / 150;
+                          coefficientTeamTwo = 150 / (150 + rankDifference);
+                          pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                          pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                          updatePlayersMap();
                         }
-                    }
-                    else if (team1rank == team2rank) {
-                        if (Number(match.team1.result) > Number(match.team2.result)) {
-                            rankTeamOne = 10 + goalDifference;
-                            rankTeamTwo = -10 - goalDifference;
+                      }
+                      else if (team1rank == team2rank) {
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = + goalDifference;
+                          rankTeamTwo = - goalDifference;
                         }
-                        else if (Number(match.team1.result) < Number(match.team2.result)) {
-                            rankTeamOne = -10 - goalDifference;
-                            rankTeamTwo = 10 + goalDifference;
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = - goalDifference;
+                          rankTeamTwo = + goalDifference;
                         }
-
                         //checks the actual result;
-                        if (Number(match.team1.result) > Number(match.team2.result)) {
-                            winsTeamOne = 1;
-                            lossesTeamTwo = 1;
-                            coefficientTeamOne = 1;
-                            coefficientTeamTwo = 1;
-                            pointsTeamOne = 10 + goalDifference;
-                            pointsTeamTwo = 5 - goalDifference;
-                            updatePlayersMap();
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          winsTeamOne = 1;
+                          lossesTeamTwo = 1;
+                          pointsTeamOne = 10 + goalDifference;
+                          pointsTeamTwo = 5 - goalDifference;
+                          updatePlayersMap();
                         }
-                        else if (Number(match.team1.result) < Number(match.team2.result)) {
-                            winsTeamTwo = 1;
-                            lossesTeamOne = 1;
-                            coefficientTeamOne = 1;
-                            coefficientTeamTwo = 1;
-                            pointsTeamOne = 5 - goalDifference;
-                            pointsTeamTwo = 10 + goalDifference;
-                            updatePlayersMap();
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          winsTeamTwo = 1;
+                          lossesTeamOne = 1;
+                          pointsTeamOne = 5 - goalDifference;
+                          pointsTeamTwo = 10 + goalDifference;
+                          updatePlayersMap();
                         }
-
-                        else if (Number(match.team1.result) == Number(match.team2.result)) {
-                            drawsTeamOne = 1;
-                            drawsTeamTwo = 1;
-                            coefficientTeamOne = 1;
-                            coefficientTeamTwo = 1;
-                            pointsTeamOne = 5;
-                            pointsTeamTwo = 5;
-                            updatePlayersMap();
+                        else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
+                          drawsTeamOne = 1;
+                          drawsTeamTwo = 1;
+                          pointsTeamOne = 5;
+                          pointsTeamTwo = 5;
+                          updatePlayersMap();
                         }
+                      }
+    
+                      function updatePlayersMap() {
+                        playersForUpdate.team1["player" + i].rank = Number(playersForUpdate.team1["player" + i].rank) + Number(rankTeamOne);
+                        playersForUpdate.team1["player" + i]["playerstats" + year].points = Number(playersForUpdate.team1["player" + i]["playerstats" + year].points) + Number(Math.round(pointsTeamOne));
+                        playersForUpdate.team1["player" + i]["playerstats" + year].matches = Number(playersForUpdate.team1["player" + i]["playerstats" + year].matches) + 1;
+                        playersForUpdate.team1["player" + i]["playerstats" + year].wins = Number(playersForUpdate.team1["player" + i]["playerstats" + year].wins) + Number(winsTeamOne);
+                        playersForUpdate.team1["player" + i]["playerstats" + year].draws = Number(playersForUpdate.team1["player" + i]["playerstats" + year].draws) + Number(drawsTeamOne);
+                        playersForUpdate.team1["player" + i]["playerstats" + year].losses = Number(playersForUpdate.team1["player" + i]["playerstats" + year].losses) + Number(lossesTeamOne);
+                        playersMap.set(playersForUpdate.team1["player" + i]._id, playersForUpdate.team1["player" + i]);
+                        match.team1["player" + i].points = Number(Math.round(pointsTeamOne));
+                        delete match.team1["player" + i].playerstats
+                        delete match.team1["player" + i].playerstats2017
+                        delete match.team1["player" + i].playerstats2018
+                        delete match.team1["player" + i].playerstats2019
+                      }
                     }
-
-
-                    match.team1.rank = Number(team1rank);
-                    match.team2.rank = Number(team2rank);
-                    match.team1.points = Number(pointsTeamOne);
-                    match.team2.points = Number(pointsTeamTwo);
-                    match.team1.coefficient = Number(coefficientTeamOne);
-                    match.team2.coefficient = Number(coefficientTeamTwo);
-
-
-                }
-
+    
+                    for (let i = 1; i < 7; i++) {
+                      let rankTeamOne = 0;
+                      let rankTeamTwo = 0;
+                      let pointsTeamOne = 0;
+                      let pointsTeamTwo = 0;
+                      let winsTeamOne = 0;
+                      let winsTeamTwo = 0;
+                      let drawsTeamOne = 0;
+                      let drawsTeamTwo = 0;
+                      let lossesTeamOne = 0;
+                      let lossesTeamTwo = 0;
+                      let coefficientTeamOne = 0;
+                      let coefficientTeamTwo = 0;
+    
+                      let team2rank = teamTwoRank - Number(playersForUpdate.team2["player" + i].rank);
+                      let team1rank = teamOneRank*5/6;
+                      let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
+                      if (handicap > 3) {
+                        handicap = 3;
+                      }
+                      let goalDifference = Math.abs(playersForUpdate.team1.result - playersForUpdate.team2.result);
+                      if (goalDifference > 5) {
+                        goalDifference = 5;
+                      }
+                      let rankDifference = Math.abs(team1rank - team2rank);
+                      if (rankDifference > 300) {
+                        rankDifference = 300;
+                      }
+    
+                      if (team1rank > team2rank) {
+                        //checks only the handicapped result;
+                        if (Number(playersForUpdate.team1.result) > (Number(playersForUpdate.team2.result) + handicap)) {
+                          rankTeamOne = goalDifference - handicap;
+                          rankTeamTwo = - goalDifference + handicap;
+                        }
+                        else if (Number(playersForUpdate.team1.result) < (Number(playersForUpdate.team2.result) + handicap)) {
+                          rankTeamOne = - goalDifference - handicap;
+                          rankTeamTwo = goalDifference + handicap;
+                        }
+                        //checks the actual result;
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          winsTeamOne = 1;
+                          lossesTeamTwo = 1;
+                          coefficientTeamOne = 150 / (150 + rankDifference);
+                          coefficientTeamTwo = (150 + rankDifference) / 150;
+                          pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
+                        }
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          winsTeamTwo = 1;
+                          lossesTeamOne = 1;
+                          coefficientTeamOne = 150 / (150 + rankDifference);
+                          coefficientTeamTwo = (150 + rankDifference) / 150;
+                          pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
+                        }
+                        else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
+                          drawsTeamOne = 1;
+                          drawsTeamTwo = 1;
+                          coefficientTeamOne = 150 / (150 + rankDifference);
+                          coefficientTeamTwo = (150 + rankDifference) / 150;
+                          pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                          pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                          updatePlayersMap();
+                        }
+                      }
+                      else if (team1rank < team2rank) {
+                        //checks the handicapped result only;
+                        if ((Number(playersForUpdate.team1.result) + handicap) > Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = goalDifference + handicap;
+                          rankTeamTwo = - goalDifference - handicap;
+                        }
+                        else if ((Number(playersForUpdate.team1.result) + handicap) < Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = - goalDifference + handicap;
+                          rankTeamTwo = + goalDifference - handicap;
+                        }
+                        //checks the actual result;
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          winsTeamOne = 1;
+                          lossesTeamTwo = 1;
+                          coefficientTeamOne = (150 + rankDifference) / 150;
+                          coefficientTeamTwo = 150 / (150 + rankDifference);
+                          pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
+                        }
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          winsTeamTwo = 1;
+                          lossesTeamOne = 1;
+                          coefficientTeamOne = (150 + rankDifference) / 150;
+                          coefficientTeamTwo = 150 / (150 + rankDifference);
+                          pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
+                          pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
+                          updatePlayersMap();
+                        }
+                        else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
+                          drawsTeamOne = 1;
+                          drawsTeamTwo = 1;
+                          coefficientTeamOne = (150 + rankDifference) / 150;
+                          coefficientTeamTwo = 150 / (150 + rankDifference);
+                          pointsTeamOne = Math.round(5 * coefficientTeamOne);
+                          pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
+                          updatePlayersMap();
+                        }
+                      }
+                      else if (team1rank == team2rank) {
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = goalDifference;
+                          rankTeamTwo = - goalDifference;
+                        }
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          rankTeamOne = - goalDifference;
+                          rankTeamTwo = goalDifference;
+                        }
+                        //checks the actual result;
+                        if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
+                          winsTeamOne = 1;
+                          lossesTeamTwo = 1;
+                          coefficientTeamOne = 1;
+                          coefficientTeamTwo = 1;
+                          pointsTeamOne = 10 + goalDifference;
+                          pointsTeamTwo = 5 - goalDifference;
+                          updatePlayersMap();
+                        }
+                        else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
+                          winsTeamTwo = 1;
+                          lossesTeamOne = 1;
+                          coefficientTeamOne = 1;
+                          coefficientTeamTwo = 1;
+                          pointsTeamOne = 5 - goalDifference;
+                          pointsTeamTwo = 10 + goalDifference;
+                          updatePlayersMap();
+                        }
+                        else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
+                          drawsTeamOne = 1;
+                          drawsTeamTwo = 1;
+                          coefficientTeamOne = 1;
+                          coefficientTeamTwo = 1;
+                          pointsTeamOne = 5;
+                          pointsTeamTwo = 5;
+                          updatePlayersMap();
+                        }
+                      }
+    
+                      function updatePlayersMap() {
+                        playersForUpdate.team2["player" + i].rank = Number(playersForUpdate.team2["player" + i].rank) + Number(rankTeamTwo);
+                        playersForUpdate.team2["player" + i]["playerstats" + year].points = Number(playersForUpdate.team2["player" + i]["playerstats" + year].points) + Number(Math.round(pointsTeamTwo));
+                        playersForUpdate.team2["player" + i]["playerstats" + year].matches = Number(playersForUpdate.team2["player" + i]["playerstats" + year].matches) + 1;
+                        playersForUpdate.team2["player" + i]["playerstats" + year].wins = Number(playersForUpdate.team2["player" + i]["playerstats" + year].wins) + Number(winsTeamTwo);
+                        playersForUpdate.team2["player" + i]["playerstats" + year].draws = Number(playersForUpdate.team2["player" + i]["playerstats" + year].draws) + Number(drawsTeamTwo);
+                        playersForUpdate.team2["player" + i]["playerstats" + year].losses = Number(playersForUpdate.team2["player" + i]["playerstats" + year].losses) + Number(lossesTeamTwo);
+                        playersMap.set(playersForUpdate.team2["player" + i]._id, playersForUpdate.team2["player" + i]); 
+                        match.team2["player" + i].points = Number(Math.round(pointsTeamTwo));
+                        delete match.team2["player" + i].playerstats
+                        delete match.team2["player" + i].playerstats2017
+                        delete match.team2["player" + i].playerstats2018
+                        delete match.team2["player" + i].playerstats2019                  
+                      }
+                    }
+                  }
+    
                 for (let match of matches) {
                     $.ajax({
                         method: "PUT",
                         url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/matches/" + match._id,
                         headers: getKinveyUserAuthHeaders(),
                         data: match,
-                        success: "",
+                        success: "All matches updated succesfully",
                         error: handleAjaxError
                     });
                 }
@@ -1939,7 +2123,7 @@ function startApp() {
                         url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + player._id,
                         headers: getKinveyUserAuthHeaders(),
                         data: player,
-                        success: "",
+                        success: "All players updated succesfully",
                         error: handleAjaxError
                     });
                 }
@@ -2030,7 +2214,7 @@ function startApp() {
                     var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
                     response(this.element.children("option").map(function () {
                         var text = $(this).text();
-                        if (this.value && ( !request.term || matcher.test(text) ))
+                        if (this.value && (!request.term || matcher.test(text)))
                             return {
                                 label: text,
                                 value: text,
@@ -2115,8 +2299,8 @@ function startApp() {
             ];
             $("#teamOnePlayerOne, #teamOnePlayerTwo, #teamOnePlayerThree, #teamOnePlayerFour, #teamOnePlayerFive, #teamOnePlayerSix, " +
                 "#teamTwoPlayerOne, #teamTwoPlayerTwo, #teamTwoPlayerThree, #teamTwoPlayerFour, #teamTwoPlayerFive, #teamTwoPlayerSix").autocomplete({
-                source: loadPlayersInSelect()
-            });
+                    source: loadPlayersInSelect()
+                });
         });
     }
 
@@ -2130,7 +2314,7 @@ function startApp() {
         console.log($('#datetimepicker_format').datetimepicker('getValue'));
 
         $("#datetimepicker_format_change").on("click", function (e) {
-            $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({format: $("#datetimepicker_format_value").val()});
+            $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
         });
         $("#datetimepicker_format_locale").on("change", function (e) {
             $.datetimepicker.setLocale($(e.currentTarget).val());
@@ -2142,7 +2326,7 @@ function startApp() {
             disabledDates: ['1986/01/08', '1986/01/09', '1986/01/10'],
             startDate: '1986/01/05'
         });
-        $('#datetimepicker').datetimepicker({value: '2015/04/15 05:03', step: 10});
+        $('#datetimepicker').datetimepicker({ value: '2015/04/15 05:03', step: 10 });
 
         $('.some_class').datetimepicker();
 
@@ -2256,7 +2440,6 @@ function startApp() {
                 return [true, ""];
             }
         });
-        $('#datetimepicker_dark').datetimepicker({theme: 'dark'})
+        $('#datetimepicker_dark').datetimepicker({ theme: 'dark' })
     }
-
 }
