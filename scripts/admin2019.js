@@ -844,6 +844,16 @@ function startApp() {
         showView('viewSingleMatch');
         $('#showSingleMatch').append($('<div>', { id: 'player' }))
 
+        let favoriteTeam1 = "";
+        let favoriteTeam2 = "";
+        if(match.team1.rank > match.team2.rank){
+            favoriteTeam1 = "Отбор Фаворит"
+            favoriteTeam2 = "Отбор Аутсайдер"
+        }
+        if(match.team1.rank < match.team2.rank){
+            favoriteTeam1 = "Отбор Аутсайдер"
+            favoriteTeam2 = "Отбор Фаворит"
+        }
 
 
         let singleMatchTable = $('<table>')
@@ -853,10 +863,10 @@ function startApp() {
                 $('<th>').text(match.team2.result),
                 $('<th>').text(match.team2.name)
             )).append($('<tr>').append(
-                $('<td>').text("Отборен ранг преди мача"),
+                $('<td>').text(favoriteTeam1),
                 $('<td>').text(match.team1.rank),
                 $('<td>').text(match.team2.rank),
-                $('<td>').text("Отборен ранг преди мача")
+                $('<td>').text(favoriteTeam2)
             ));
 
         let singleMatchPlayersTable = $('<table>')
