@@ -479,7 +479,7 @@ function startApp() {
     function showSingleMatch(match) {
         $('#showSingleMatch').empty();
         showView('viewSingleMatch');
-        $('#showSingleMatch').append($('<div>', {id: 'player'}))
+        $('#showSingleMatch').append($('<div>', { id: 'player' }))
 
 
 
@@ -490,15 +490,10 @@ function startApp() {
                 $('<th>').text(match.team2.result),
                 $('<th>').text(match.team2.name)
             )).append($('<tr>').append(
-                $('<td>').text(""),
+                $('<td>').text("Отборен ранг преди мача"),
                 $('<td>').text(match.team1.rank),
                 $('<td>').text(match.team2.rank),
                 $('<td>').text("Отборен ранг преди мача")
-            )).append($('<tr>').append(
-                $('<td>').text(""),
-                $('<td>').text(Number(match.team1.coefficient).toFixed(2)),
-                $('<td>').text(Number(match.team2.coefficient).toFixed(2)),
-                $('<td>').text("Коефициент")
             ));
 
         let singleMatchPlayersTable = $('<table>')
@@ -509,33 +504,33 @@ function startApp() {
                 $('<th>').text("Играч")
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player1.username).click(showSinglePlayer.bind(this, match.team1.player1)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player1)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player1)),
+                $('<td>').text(match.team1.player1.points).click(showSinglePlayer.bind(this, match.team1.player1)),
+                $('<td>').text(match.team2.player1.points).click(showSinglePlayer.bind(this, match.team2.player1)),
                 $('<td>').text(match.team2.player1.username).click(showSinglePlayer.bind(this, match.team2.player1))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player2.username).click(showSinglePlayer.bind(this, match.team1.player2)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player2)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player2)),
+                $('<td>').text(match.team1.player2.points).click(showSinglePlayer.bind(this, match.team1.player2)),
+                $('<td>').text(match.team2.player2.points).click(showSinglePlayer.bind(this, match.team2.player2)),
                 $('<td>').text(match.team2.player2.username).click(showSinglePlayer.bind(this, match.team2.player2))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player3.username).click(showSinglePlayer.bind(this, match.team1.player3)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player3)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player3)),
+                $('<td>').text(match.team1.player3.points).click(showSinglePlayer.bind(this, match.team1.player3)),
+                $('<td>').text(match.team2.player3.points).click(showSinglePlayer.bind(this, match.team2.player3)),
                 $('<td>').text(match.team2.player3.username).click(showSinglePlayer.bind(this, match.team2.player3))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player4.username).click(showSinglePlayer.bind(this, match.team1.player4)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player4)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player4)),
+                $('<td>').text(match.team1.player4.points).click(showSinglePlayer.bind(this, match.team1.player4)),
+                $('<td>').text(match.team2.player4.points).click(showSinglePlayer.bind(this, match.team2.player4)),
                 $('<td>').text(match.team2.player4.username).click(showSinglePlayer.bind(this, match.team2.player4))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player5.username).click(showSinglePlayer.bind(this, match.team1.player5)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player5)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player5)),
+                $('<td>').text(match.team1.player5.points).click(showSinglePlayer.bind(this, match.team1.player5)),
+                $('<td>').text(match.team2.player5.points).click(showSinglePlayer.bind(this, match.team2.player5)),
                 $('<td>').text(match.team2.player5.username).click(showSinglePlayer.bind(this, match.team2.player5))
             )).append($('<tr>').append(
                 $('<td>').text(match.team1.player6.username).click(showSinglePlayer.bind(this, match.team1.player6)),
-                $('<td>').text(match.team1.points).click(showSinglePlayer.bind(this, match.team1.player6)),
-                $('<td>').text(match.team2.points).click(showSinglePlayer.bind(this, match.team2.player6)),
+                $('<td>').text(match.team1.player6.points).click(showSinglePlayer.bind(this, match.team1.player6)),
+                $('<td>').text(match.team2.player6.points).click(showSinglePlayer.bind(this, match.team2.player6)),
                 $('<td>').text(match.team2.player6.username).click(showSinglePlayer.bind(this, match.team2.player6))
             ));
 
@@ -543,9 +538,9 @@ function startApp() {
 
 
 
-        let player = new YT.Player ('player', {
-            height: '390',
-            width: '640',
+        let player = new YT.Player('player', {
+            height: '584',
+            width: '1038',
             videoId: match.video,
         });
 

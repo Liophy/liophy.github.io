@@ -26,6 +26,7 @@ function startApp() {
     $("#linkMenuAllPlayers").click(listAllPlayers);
     $("#linkMenuRankings2017").click(listRanking2017);
     $("#linkMenuRankings2018").click(listRanking2018);
+    $("#linkMenuRankings2019").click(listRanking2019);
     $("#linkMenuLogout").click(logoutUser);
 
     $("#formLogin").submit(loginUser);
@@ -37,7 +38,7 @@ function startApp() {
     $("#linkUserHomeAddPlayer").click(addNewPlayerView);
 
     $("#linkUserHomeRecalculateMatches").click(reCalculateAllMatches);
-    $("#linkUserHomeTest2018").click(reCalculateAllMatches);
+   
 
 
     $("#infoBox, #errorBox").click(function () {
@@ -563,6 +564,85 @@ function startApp() {
                     $('<td>').text(player.playerstats2018.losses),
                     $('<td>')
                     //.append(editLink)
+                ));
+            }
+        }
+    }
+
+    function listRanking2019() {
+        showView('viewAllPlayers');
+
+        $.ajax({
+            method: "GET",
+            url: kinveyBaseUrl + "user/" + kinveyAppKey,
+            headers: getKinveyUserAuthHeaders(),
+            success: loadUsersSuccess,
+            error: handleAjaxError
+        });
+
+        function loadUsersSuccess(players) {
+
+            function compareRang(a, b) {
+                if (Number(a.rank) < Number(b.rank))
+                    return 1;
+                if (Number(a.rank) > Number(b.rank))
+                    return -1;
+                return 0;
+            }
+            function compareName(a,b){
+                if (Number(a.name) < Number(b.name))
+                    return 1;
+                if (Number(a.name) > Number(b.name))
+                    return -1;
+                return 0;
+            }
+            function comparePoints(a,b){
+                if (Number(a.playerstats2019.points) < Number(b.playerstats2019.points))
+                    return 1;
+                if (Number(a.playerstats2019.points) > Number(b.playerstats2019.points))
+                    return -1;
+                return 0;
+            }
+
+            players.sort(comparePoints);
+
+            //showInfo('Players loaded');
+            $('#viewAllPlayers').empty();
+
+            let playersTable = $('<table>')
+                .append($('<tr>').append(
+                    '<th>N</th>'+
+                    ('<th>Име</th>')+
+                    '<th>Мачове</th>' +
+                    '<th>Победи</th>' +
+                    '<th>Равни</th>' +
+                    '<th>Загуби</th>' +
+                    ('<th>Точки</th>')
+                ));
+            $('#viewAllPlayers').append(playersTable);
+            let count = 1;
+
+
+
+
+            for (let player of players) {
+                if(player.playerstats2019.points>0){
+                    appendPlayerRow(player, playersTable);
+                    count++;
+                }
+            }
+
+            function appendPlayerRow(player, playersTable) {
+
+
+                playersTable.append($('<tr>').append(
+                    $('<td>').text(count),
+                    $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
+                    $('<td>').text(player.playerstats2019.matches),
+                    $('<td>').text(player.playerstats2019.wins),
+                    $('<td>').text(player.playerstats2019.draws),
+                    $('<td>').text(player.playerstats2019.losses),
+                    $('<td>').text(player.playerstats2019.points)
                 ));
             }
         }
