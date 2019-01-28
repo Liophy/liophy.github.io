@@ -133,6 +133,9 @@
                   Number(playersForUpdate.team2.player5.rank) +
                   Number(playersForUpdate.team2.player6.rank);
 
+                match.team1.rank = Number(teamOneRank);
+                match.team2.rank = Number(teamTwoRank);
+
                 for (let i = 1; i < 7; i++) {
                   let rankTeamOne = 0;
                   let rankTeamTwo = 0;
@@ -147,9 +150,9 @@
                   let coefficientTeamOne = 0;
                   let coefficientTeamTwo = 0;
 
-                  let team1rank = (teamOneRank - Number(playersForUpdate.team1["player" + i].rank)) * 1.2;
-                  let team2rank = teamTwoRank;
-                  let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
+                  let team1rank = teamOneRank - Number(playersForUpdate.team1["player" + i].rank);
+                  let team2rank = teamTwoRank*5/6;
+                  let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
                   if (handicap > 3) {
                     handicap = 3;
                   }
@@ -158,8 +161,9 @@
                     goalDifference = 5;
                   }
                   let rankDifference = Math.abs(team1rank - team2rank);
-                  if (rankDifference > 30) {
-                    rankDifference = 30;
+       
+                  if (rankDifference > 300) {
+                    rankDifference = 300;
                   }
 
                   if (team1rank > team2rank) {
@@ -176,8 +180,8 @@
                     if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
                       winsTeamOne = 1;
                       lossesTeamTwo = 1;
-                      coefficientTeamOne = 15 / (15 + rankDifference);
-                      coefficientTeamTwo = (15 + rankDifference) / 15;
+                      coefficientTeamOne = 150 / (150 + rankDifference);
+                      coefficientTeamTwo = (150 + rankDifference) / 150;
                       pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -185,8 +189,8 @@
                     else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
                       winsTeamTwo = 1;
                       lossesTeamOne = 1;
-                      coefficientTeamOne = 15 / (15 + rankDifference);
-                      coefficientTeamTwo = (15 + rankDifference) / 15;
+                      coefficientTeamOne = 150 / (150 + rankDifference);
+                      coefficientTeamTwo = (150 + rankDifference) / 150;
                       pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -194,8 +198,8 @@
                     else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
                       drawsTeamOne = 1;
                       drawsTeamTwo = 1;
-                      coefficientTeamOne = 15 / (15 + rankDifference);
-                      coefficientTeamTwo = (15 + rankDifference) / 15;
+                      coefficientTeamOne = 150 / (150 + rankDifference);
+                      coefficientTeamTwo = (150 + rankDifference) / 150;
                       pointsTeamOne = Math.round(5 * coefficientTeamOne);
                       pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
                       updatePlayersMap();
@@ -215,8 +219,8 @@
                     if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
                       winsTeamOne = 1;
                       lossesTeamTwo = 1;
-                      coefficientTeamOne = (15 + rankDifference) / 15;
-                      coefficientTeamTwo = 15 / (15 + rankDifference);
+                      coefficientTeamOne = (150 + rankDifference) / 150;
+                      coefficientTeamTwo = 150 / (150 + rankDifference);
                       pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -224,8 +228,8 @@
                     else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
                       winsTeamTwo = 1;
                       lossesTeamOne = 1;
-                      coefficientTeamOne = (15 + rankDifference) / 15;
-                      coefficientTeamTwo = 15 / (15 + rankDifference);
+                      coefficientTeamOne = (150 + rankDifference) / 150;
+                      coefficientTeamTwo = 150 / (150 + rankDifference);
                       pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -233,8 +237,8 @@
                     else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
                       drawsTeamOne = 1;
                       drawsTeamTwo = 1;
-                      coefficientTeamOne = (15 + rankDifference) / 15;
-                      coefficientTeamTwo = 15 / (15 + rankDifference);
+                      coefficientTeamOne = (150 + rankDifference) / 150;
+                      coefficientTeamTwo = 150 / (150 + rankDifference);
                       pointsTeamOne = Math.round(5 * coefficientTeamOne);
                       pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
                       updatePlayersMap();
@@ -303,8 +307,8 @@
                   let coefficientTeamOne = 0;
                   let coefficientTeamTwo = 0;
 
-                  let team2rank = (teamTwoRank - Number(playersForUpdate.team2["player" + i].rank)) * 1.2;
-                  let team1rank = teamOneRank;
+                  let team2rank = teamTwoRank - Number(playersForUpdate.team2["player" + i].rank);
+                  let team1rank = teamOneRank*5/6;
                   let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
                   if (handicap > 3) {
                     handicap = 3;
@@ -314,8 +318,8 @@
                     goalDifference = 5;
                   }
                   let rankDifference = Math.abs(team1rank - team2rank);
-                  if (rankDifference > 30) {
-                    rankDifference = 30;
+                  if (rankDifference > 300) {
+                    rankDifference = 300;
                   }
 
                   if (team1rank > team2rank) {
@@ -332,8 +336,8 @@
                     if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
                       winsTeamOne = 1;
                       lossesTeamTwo = 1;
-                      coefficientTeamOne = 15 / (15 + rankDifference);
-                      coefficientTeamTwo = (15 + rankDifference) / 15;
+                      coefficientTeamOne = 150 / (150 + rankDifference);
+                      coefficientTeamTwo = (150 + rankDifference) / 150;
                       pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -341,8 +345,8 @@
                     else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
                       winsTeamTwo = 1;
                       lossesTeamOne = 1;
-                      coefficientTeamOne = 15 / (15 + rankDifference);
-                      coefficientTeamTwo = (15 + rankDifference) / 15;
+                      coefficientTeamOne = 150 / (150 + rankDifference);
+                      coefficientTeamTwo = (150 + rankDifference) / 150;
                       pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -350,8 +354,8 @@
                     else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
                       drawsTeamOne = 1;
                       drawsTeamTwo = 1;
-                      coefficientTeamOne = 15 / (15 + rankDifference);
-                      coefficientTeamTwo = (15 + rankDifference) / 15;
+                      coefficientTeamOne = 150 / (150 + rankDifference);
+                      coefficientTeamTwo = (150 + rankDifference) / 150;
                       pointsTeamOne = Math.round(5 * coefficientTeamOne);
                       pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
                       updatePlayersMap();
@@ -371,8 +375,8 @@
                     if (Number(playersForUpdate.team1.result) > Number(playersForUpdate.team2.result)) {
                       winsTeamOne = 1;
                       lossesTeamTwo = 1;
-                      coefficientTeamOne = (15 + rankDifference) / 15;
-                      coefficientTeamTwo = 15 / (15 + rankDifference);
+                      coefficientTeamOne = (150 + rankDifference) / 150;
+                      coefficientTeamTwo = 150 / (150 + rankDifference);
                       pointsTeamOne = Math.round((10 + goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((5 - goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -380,8 +384,8 @@
                     else if (Number(playersForUpdate.team1.result) < Number(playersForUpdate.team2.result)) {
                       winsTeamTwo = 1;
                       lossesTeamOne = 1;
-                      coefficientTeamOne = (15 + rankDifference) / 15;
-                      coefficientTeamTwo = 15 / (15 + rankDifference);
+                      coefficientTeamOne = (150 + rankDifference) / 150;
+                      coefficientTeamTwo = 150 / (150 + rankDifference);
                       pointsTeamOne = Math.round((5 - goalDifference) * coefficientTeamOne);
                       pointsTeamTwo = Math.round((10 + goalDifference) * coefficientTeamTwo);
                       updatePlayersMap();
@@ -389,8 +393,8 @@
                     else if (Number(playersForUpdate.team1.result) == Number(playersForUpdate.team2.result)) {
                       drawsTeamOne = 1;
                       drawsTeamTwo = 1;
-                      coefficientTeamOne = (15 + rankDifference) / 15;
-                      coefficientTeamTwo = 15 / (15 + rankDifference);
+                      coefficientTeamOne = (150 + rankDifference) / 150;
+                      coefficientTeamTwo = 150 / (150 + rankDifference);
                       pointsTeamOne = Math.round(5 * coefficientTeamOne);
                       pointsTeamTwo = Math.round(5 * coefficientTeamTwo);
                       updatePlayersMap();
@@ -436,14 +440,17 @@
                   }
 
                   function updatePlayersMap() {
+                    
                     playersForUpdate.team2["player" + i].rank = Number(playersForUpdate.team2["player" + i].rank) + Number(rankTeamTwo);
                     playersForUpdate.team2["player" + i]["playerstats" + year].points = Number(playersForUpdate.team2["player" + i]["playerstats" + year].points) + Number(Math.round(pointsTeamTwo));
                     playersForUpdate.team2["player" + i]["playerstats" + year].matches = Number(playersForUpdate.team2["player" + i]["playerstats" + year].matches) + 1;
                     playersForUpdate.team2["player" + i]["playerstats" + year].wins = Number(playersForUpdate.team2["player" + i]["playerstats" + year].wins) + Number(winsTeamTwo);
                     playersForUpdate.team2["player" + i]["playerstats" + year].draws = Number(playersForUpdate.team2["player" + i]["playerstats" + year].draws) + Number(drawsTeamTwo);
                     playersForUpdate.team2["player" + i]["playerstats" + year].losses = Number(playersForUpdate.team2["player" + i]["playerstats" + year].losses) + Number(lossesTeamTwo);
-                    playersMap.set(playersForUpdate.team2["player" + i]._id, playersForUpdate.team2["player" + i]);
-                    playersForUpdate.team2["player" + i].points = Number(Math.round(pointsTeamTwo));
+                    playersMap.set(playersForUpdate.team2["player" + i]._id, playersForUpdate.team2["player" + i]); 
+                    match.team2["player" + i].points = Number(Math.round(pointsTeamTwo));
+                    
+                 
                     delete match.team2["player" + i].playerstats
                     delete match.team2["player" + i].playerstats2017
                     delete match.team2["player" + i].playerstats2018
