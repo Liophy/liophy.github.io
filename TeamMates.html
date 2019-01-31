@@ -1,0 +1,151 @@
+<div>
+    <div>user</div>
+    <input type="file" id="inputPlayers">
+</div>
+<div>
+    <div>matches</div>
+    <input type="file" id="inputMatches">
+</div>
+
+<script>
+
+
+    var inputPlayers = document.getElementById("inputPlayers");
+    var inputMatches = document.getElementById("inputMatches");
+
+    inputPlayers.addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+            var playersFile = this.files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener('load', function (e) {
+                let players = JSON.parse(e.target.result);
+
+                let playersMap = new Map();
+
+                for (let player of players) {
+
+                    player.rank = Number(1000);
+                    delete player.playerstats;
+                    delete player.points;
+                    player.playerstats2017 = {
+                        points: Number(0),
+                        matches: Number(0),
+                        wins: Number(0),
+                        draws: Number(0),
+                        losses: Number(0)
+                    };
+                    player.playerstats2018 = {
+                        points: Number(0),
+                        matches: Number(0),
+                        wins: Number(0),
+                        draws: Number(0),
+                        losses: Number(0)
+                    };
+                    player.playerstats2019 = {
+                        points: Number(0),
+                        matches: Number(0),
+                        wins: Number(0),
+                        draws: Number(0),
+                        losses: Number(0)
+                    };
+
+                    playersMap.set(player._id, player);
+                }
+
+                for (let player of playersMap) {
+
+                }
+
+                inputMatches.addEventListener("change", function () {
+                    if (this.files && this.files[0]) {
+                        var matchesFile = this.files[0];
+                        var reader = new FileReader();
+
+                        reader.addEventListener('load', function (e) {
+                            let matches = JSON.parse(e.target.result);
+
+                            let teamMates = new Map();
+
+
+                            for (let match of matches) {
+
+                                let target = "58c2be9e2075cc2610fb8086";
+
+                                for (let i = 1; i < 7; i++) {
+
+                                    if (match.team1["player" + i]._id == target) {
+                                        for (let i = 1; i < 7; i++) {
+                                            if (typeof teamMates.get(match.team1["player" + i]._id) == 'undefined') {
+                                                let player = {}
+                                                player.username = match.team1["player" + i].username;
+                                                player.count = 1;
+                                                teamMates.set(match.team1["player" + i]._id, player);
+                                            }
+                                            else {
+                                                let player = teamMates.get(match.team1["player" + i]._id)
+                                                player.count = Number(player.count) + 1;
+                                                teamMates.set(match.team1["player" + i]._id, player);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                for (let i = 1; i < 7; i++) {
+
+                                    if (match.team2["player" + i]._id == target) {
+                                        for (let i = 1; i < 7; i++) {
+                                            if (typeof teamMates.get(match.team2["player" + i]._id) == 'undefined') {
+                                                let player = {}
+                                                player.username = match.team2["player" + i].username;
+                                                player.count = 1;
+                                                teamMates.set(match.team2["player" + i]._id, player);
+                                            }
+                                            else {
+                                                let player = teamMates.get(match.team2["player" + i]._id)
+                                                player.count = Number(player.count) + 1;
+                                                teamMates.set(match.team2["player" + i]._id, player);
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            function compareCount(a,b){
+                if (Number(a[1].count) < Number(b[1].count))
+                    return 1;
+                if (Number(a[1].count) > Number(b[1].count))
+                    return -1;
+                return 0;
+            }
+
+                            let test = Array.from(teamMates);
+                            test.sort(compareCount)
+
+                            for (let teamMate of test) {
+
+                                console.log(`${teamMate[0]} -> ${teamMate[1].username}->        ${teamMate[1].count}`)
+                            }
+
+                            //console.log(teamMates)  
+                            for (let match of matches) {
+                                console.log()
+                            };
+                        });
+
+                        reader.readAsText(matchesFile, 'UTF-8');
+                    }
+                });
+
+            });
+
+            reader.readAsText(playersFile, 'UTF-8');
+        }
+    });
+
+
+
+
+
+</script>
