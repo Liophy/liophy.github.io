@@ -301,13 +301,7 @@ function startApp() {
 
         function loadUsersSuccess(players) {
 
-            function compareRang(a, b) {
-                if (Number(a.playerstats.rank) < Number(b.playerstats.rank))
-                    return 1;
-                if (Number(a.playerstats.rank) > Number(b.playerstats.rank))
-                    return -1;
-                return 0;
-            }
+
             function compareName(a, b) {
                 if (Number(a.name) < Number(b.name))
                     return 1;
@@ -316,9 +310,9 @@ function startApp() {
                 return 0;
             }
             function comparePoints(a, b) {
-                if (Number(a.playerstats.points) < Number(b.playerstats.points))
+                if (Number(a.playerstats2018.points) < Number(b.playerstats2018.points))
                     return 1;
-                if (Number(a.playerstats.points) > Number(b.playerstats.points))
+                if (Number(a.playerstats2018.points) > Number(b.playerstats2018.points))
                     return -1;
                 return 0;
             }
@@ -330,7 +324,7 @@ function startApp() {
                 return 0;
             }
 
-            players.sort(compareRang);
+            players.sort(comparePoints);
 
             //showInfo('Players loaded');
             $('#viewAllPlayers').empty();
@@ -366,13 +360,14 @@ function startApp() {
                 playersTable.append($('<tr>').append(
                     $('<td>').text(count),
                     $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
-                    $('<td>').text(player.playerstats.rank),
-                    $('<td>').text(player.playerstats.points),
-                    $('<td>').text((player.playerstats.points / player.playerstats.matches).toFixed(2)),
-                    $('<td>').text(player.playerstats.matches),
-                    $('<td>').text(player.playerstats.wins),
-                    $('<td>').text(player.playerstats.draws),
-                    $('<td>').text(player.playerstats.losses),
+                    $('<td>').text(player.playerstats2018.rank),
+                    $('<td>').text(player.playerstats2018.points),
+                    $('<td>').text((player.playerstats2018.points / player.playerstats2018.matches).toFixed(2)),
+                    $('<td>').text(player.playerstats2018.matches),
+                    $('<td>').text(player.playerstats2018.wins),
+                    $('<td>').text(player.playerstats2018.draws),
+                    $('<td>').text(player.playerstats2018.losses),
+                    $('<td>').text(player._id),
                     $('<td>')
                     //.append(editLink)
                 ));
@@ -684,7 +679,6 @@ function startApp() {
             }
 
         }
-
     }
 
     function deleteMatch(match) {
@@ -1004,8 +998,11 @@ function startApp() {
                     match.team2.player4._id == player._id ||
                     match.team2.player5._id == player._id ||
                     match.team2.player6._id == player._id
-                )
+                ){
                     playersMatches.push(match)
+                    console.log(match)
+                }
+                    
             }
 
             let matchTable = $('<table>')
@@ -1203,9 +1200,6 @@ function startApp() {
         match.team2.player4.points = 0;
         match.team2.player5.points = 0;
         match.team2.player6.points = 0;
-
-
-
 
         for (let i = 1; i < 7; i++) {
             let rankTeamOne = 0;
@@ -1536,9 +1530,9 @@ function startApp() {
                 match.team2["player" + i].playerstats2019.losses = Number(match.team2["player" + i].playerstats2019.losses) + Number(lossesTeamTwo);
                 $.ajax({
                     method: "PUT",
-                    url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team1["player" + i]._id,
+                    url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team2["player" + i]._id,
                     headers: getKinveyUserAuthHeaders(),
-                    data: match.team1["player" + i],
+                    data: match.team2["player" + i],
                     error: handleAjaxError
                 });
             }
@@ -2191,14 +2185,14 @@ function startApp() {
                   }
     
                 for (let match of matches) {
-                    $.ajax({
+                    setTimeout($.ajax({
                         method: "PUT",
                         url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/matches/" + match._id,
                         headers: getKinveyUserAuthHeaders(),
                         data: match,
                         success: "All matches updated succesfully",
                         error: handleAjaxError
-                    });
+                    }),500);
                 }
 
                 let updatedPlayers = [];
@@ -2208,14 +2202,14 @@ function startApp() {
                 }
 
                 for (let player of updatedPlayers) {
-                    $.ajax({
+                    setTimeout($.ajax({
                         method: "PUT",
                         url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + player._id,
                         headers: getKinveyUserAuthHeaders(),
                         data: player,
                         success: "All players updated succesfully",
                         error: handleAjaxError
-                    });
+                    }),500);
                 }
             }
         }
