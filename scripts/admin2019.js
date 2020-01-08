@@ -27,6 +27,7 @@ function startApp() {
     $("#linkMenuRankings2017").click(listRanking2017);
     $("#linkMenuRankings2018").click(listRanking2018);
     $("#linkMenuRankings2019").click(listRanking2019);
+    $("#linkMenuRankings2020").click(listRanking2020);
     $("#linkMenuLogout").click(logoutUser);
 
     $("#formLogin").submit(loginUser);
@@ -37,7 +38,7 @@ function startApp() {
     $("#linkUserHomeAddMatch").click(addNewMatchView);
     $("#linkUserHomeAddPlayer").click(addNewPlayerView);
 
-    $("#linkUserHomeRecalculateMatches").click(reCalculateAllMatches);
+  
    
 
 
@@ -137,6 +138,13 @@ function startApp() {
             name: $("#registerName").val(),
             rank: Number(1000),
             playerstats: {
+                points: Number(0),
+                matches: Number(0),
+                wins: Number(0),
+                draws: Number(0),
+                losses: Number(0)
+            },
+            playerstats2019: {
                 points: Number(0),
                 matches: Number(0),
                 wins: Number(0),
@@ -324,7 +332,7 @@ function startApp() {
                 return 0;
             }
 
-            players.sort(comparePoints);
+            players.sort(compareName);
 
             //showInfo('Players loaded');
             $('#viewAllPlayers').empty();
@@ -643,6 +651,85 @@ function startApp() {
         }
     }
 
+    function listRanking2020() {
+        showView('viewAllPlayers');
+
+        $.ajax({
+            method: "GET",
+            url: kinveyBaseUrl + "user/" + kinveyAppKey,
+            headers: getKinveyUserAuthHeaders(),
+            success: loadUsersSuccess,
+            error: handleAjaxError
+        });
+
+        function loadUsersSuccess(players) {
+
+            function compareRang(a, b) {
+                if (Number(a.rank) < Number(b.rank))
+                    return 1;
+                if (Number(a.rank) > Number(b.rank))
+                    return -1;
+                return 0;
+            }
+            function compareName(a,b){
+                if (Number(a.name) < Number(b.name))
+                    return 1;
+                if (Number(a.name) > Number(b.name))
+                    return -1;
+                return 0;
+            }
+            function comparePoints(a,b){
+                if (Number(a.playerstats2019.points) < Number(b.playerstats2019.points))
+                    return 1;
+                if (Number(a.playerstats2019.points) > Number(b.playerstats2019.points))
+                    return -1;
+                return 0;
+            }
+
+            players.sort(comparePoints);
+
+            //showInfo('Players loaded');
+            $('#viewAllPlayers').empty();
+
+            let playersTable = $('<table>')
+                .append($('<tr>').append(
+                    '<th>N</th>'+
+                    ('<th>Име</th>')+
+                    '<th>Мачове</th>' +
+                    '<th>Победи</th>' +
+                    '<th>Равни</th>' +
+                    '<th>Загуби</th>' +
+                    ('<th>Точки</th>')
+                ));
+            $('#viewAllPlayers').append(playersTable);
+            let count = 1;
+
+
+
+
+            for (let player of players) {
+                if(player.playerstats2020.points>0){
+                    appendPlayerRow(player, playersTable);
+                    count++;
+                }
+            }
+
+            function appendPlayerRow(player, playersTable) {
+
+
+                playersTable.append($('<tr>').append(
+                    $('<td>').text(count),
+                    $('<td>').text(player.username).click(showSinglePlayer.bind(this, player)),
+                    $('<td>').text(player.playerstats2020.matches),
+                    $('<td>').text(player.playerstats2020.wins),
+                    $('<td>').text(player.playerstats2020.draws),
+                    $('<td>').text(player.playerstats2020.losses),
+                    $('<td>').text(player.playerstats2020.points)
+                ));
+            }
+        }
+    }
+
     function editPlayer(player) {
         //cartItem== player
 
@@ -718,7 +805,8 @@ function startApp() {
                     "username": $("#teamOnePlayerOne").find(":selected").data("value").username,
                     "playerstats2017": $("#teamOnePlayerOne").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamOnePlayerOne").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamOnePlayerOne").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamOnePlayerOne").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamOnePlayerOne").find(":selected").data("value").playerstats2020
                 },
                 "player2": {
                     "_id": $("#teamOnePlayerTwo").find(":selected").data("value")._id,
@@ -726,7 +814,8 @@ function startApp() {
                     "username": $("#teamOnePlayerTwo").find(":selected").data("value").username,
                     "playerstats2017": $("#teamOnePlayerTwo").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamOnePlayerTwo").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamOnePlayerTwo").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamOnePlayerTwo").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamOnePlayerTwo").find(":selected").data("value").playerstats2020
                 },
                 "player3": {
                     "_id": $("#teamOnePlayerThree").find(":selected").data("value")._id,
@@ -734,7 +823,8 @@ function startApp() {
                     "username": $("#teamOnePlayerThree").find(":selected").data("value").username,
                     "playerstats2017": $("#teamOnePlayerThree").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamOnePlayerThree").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamOnePlayerThree").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamOnePlayerThree").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamOnePlayerThree").find(":selected").data("value").playerstats2020
                 },
                 "player4": {
                     "_id": $("#teamOnePlayerFour").find(":selected").data("value")._id,
@@ -742,7 +832,8 @@ function startApp() {
                     "username": $("#teamOnePlayerFour").find(":selected").data("value").username,
                     "playerstats2017": $("#teamOnePlayerFour").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamOnePlayerFour").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamOnePlayerFour").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamOnePlayerFour").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamOnePlayerFour").find(":selected").data("value").playerstats2020
                 },
                 "player5": {
                     "_id": $("#teamOnePlayerFive").find(":selected").data("value")._id,
@@ -750,7 +841,8 @@ function startApp() {
                     "username": $("#teamOnePlayerFive").find(":selected").data("value").username,
                     "playerstats2017": $("#teamOnePlayerFive").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamOnePlayerFive").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamOnePlayerFive").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamOnePlayerFive").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamOnePlayerFive").find(":selected").data("value").playerstats2020
                 },
                 "player6": {
                     "_id": $("#teamOnePlayerSix").find(":selected").data("value")._id,
@@ -758,7 +850,8 @@ function startApp() {
                     "username": $("#teamOnePlayerSix").find(":selected").data("value").username,
                     "playerstats2017": $("#teamOnePlayerSix").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamOnePlayerSix").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamOnePlayerSix").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamOnePlayerSix").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamOnePlayerSix").find(":selected").data("value").playerstats2020
                 }
             },
             "team2": {
@@ -770,7 +863,8 @@ function startApp() {
                     "username": $("#teamTwoPlayerOne").find(":selected").data("value").username,
                     "playerstats2017": $("#teamTwoPlayerOne").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamTwoPlayerOne").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamTwoPlayerOne").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamTwoPlayerOne").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamTwoPlayerOne").find(":selected").data("value").playerstats2020
                 },
                 "player2": {
                     "_id": $("#teamTwoPlayerTwo").find(":selected").data("value")._id,
@@ -778,7 +872,8 @@ function startApp() {
                     "username": $("#teamTwoPlayerTwo").find(":selected").data("value").username,
                     "playerstats2017": $("#teamTwoPlayerTwo").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamTwoPlayerTwo").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamTwoPlayerTwo").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamTwoPlayerTwo").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamTwoPlayerTwo").find(":selected").data("value").playerstats2020
                 },
                 "player3": {
                     "_id": $("#teamTwoPlayerThree").find(":selected").data("value")._id,
@@ -786,7 +881,8 @@ function startApp() {
                     "username": $("#teamTwoPlayerThree").find(":selected").data("value").username,
                     "playerstats2017": $("#teamTwoPlayerThree").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamTwoPlayerThree").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamTwoPlayerThree").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamTwoPlayerThree").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamTwoPlayerThree").find(":selected").data("value").playerstats2020
                 },
                 "player4": {
                     "_id": $("#teamTwoPlayerFour").find(":selected").data("value")._id,
@@ -794,7 +890,8 @@ function startApp() {
                     "username": $("#teamTwoPlayerFour").find(":selected").data("value").username,
                     "playerstats2017": $("#teamTwoPlayerFour").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamTwoPlayerFour").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamTwoPlayerFour").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamTwoPlayerFour").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamTwoPlayerFour").find(":selected").data("value").playerstats2020
                 },
                 "player5": {
                     "_id": $("#teamTwoPlayerFive").find(":selected").data("value")._id,
@@ -802,7 +899,8 @@ function startApp() {
                     "username": $("#teamTwoPlayerFive").find(":selected").data("value").username,
                     "playerstats2017": $("#teamTwoPlayerFive").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamTwoPlayerFive").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamTwoPlayerFive").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamTwoPlayerFive").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamTwoPlayerFive").find(":selected").data("value").playerstats2020
                 },
                 "player6": {
                     "_id": $("#teamTwoPlayerSix").find(":selected").data("value")._id,
@@ -810,7 +908,8 @@ function startApp() {
                     "username": $("#teamTwoPlayerSix").find(":selected").data("value").username,
                     "playerstats2017": $("#teamTwoPlayerSix").find(":selected").data("value").playerstats2017,
                     "playerstats2018": $("#teamTwoPlayerSix").find(":selected").data("value").playerstats2018,
-                    "playerstats2019": $("#teamTwoPlayerSix").find(":selected").data("value").playerstats2019
+                    "playerstats2019": $("#teamTwoPlayerSix").find(":selected").data("value").playerstats2019,
+                    "playerstats2020": $("#teamTwoPlayerSix").find(":selected").data("value").playerstats2020
                 }
             }
         };
@@ -1215,12 +1314,13 @@ function startApp() {
             let coefficientTeamOne = 0;
             let coefficientTeamTwo = 0;
 
-            let team1rank = teamOneRank - Number(match.team1["player" + i].rank);
-            let team2rank = teamTwoRank*5/6;
-            let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
+            let handicap = Math.round((Math.abs(teamOneRank - teamTwoRank)) / 50);
+            
             if (handicap > 3) {
                 handicap = 3;
               }
+            let team1rank = teamOneRank - Number(match.team1["player" + i].rank);
+            let team2rank = teamTwoRank*5/6;
             let goalDifference = Math.abs(match.team1.result - match.team2.result);
             if (goalDifference > 5) {
                 goalDifference = 5;
@@ -1351,11 +1451,11 @@ function startApp() {
 
             function updatePlayer() {
                 match.team1["player" + i].rank = Number(match.team1["player" + i].rank) + Number(rankTeamOne);
-                match.team1["player" + i].playerstats2019.points = Number(match.team1["player" + i].playerstats2019.points) + Number(Math.round(pointsTeamOne));
-                match.team1["player" + i].playerstats2019.matches = Number(match.team1["player" + i].playerstats2019.matches) + 1;
-                match.team1["player" + i].playerstats2019.wins = Number(match.team1["player" + i].playerstats2019.wins) + Number(winsTeamOne);
-                match.team1["player" + i].playerstats2019.draws = Number(match.team1["player" + i].playerstats2019.draws) + Number(drawsTeamOne);
-                match.team1["player" + i].playerstats2019.losses = Number(match.team1["player" + i].playerstats2019.losses) + Number(lossesTeamOne);
+                match.team1["player" + i].playerstats2020.points = Number(match.team1["player" + i].playerstats2020.points) + Number(Math.round(pointsTeamOne));
+                match.team1["player" + i].playerstats2020.matches = Number(match.team1["player" + i].playerstats2020.matches) + 1;
+                match.team1["player" + i].playerstats2020.wins = Number(match.team1["player" + i].playerstats2020.wins) + Number(winsTeamOne);
+                match.team1["player" + i].playerstats2020.draws = Number(match.team1["player" + i].playerstats2020.draws) + Number(drawsTeamOne);
+                match.team1["player" + i].playerstats2020.losses = Number(match.team1["player" + i].playerstats2020.losses) + Number(lossesTeamOne);
                 $.ajax({
                     method: "PUT",
                     url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team1["player" + i]._id,
@@ -1381,20 +1481,21 @@ function startApp() {
             let coefficientTeamOne = 0;
             let coefficientTeamTwo = 0;
 
-            let team2rank = teamTwoRank - Number(match.team2["player" + i].rank);
-            let team1rank = teamOneRank*5/6;
-            let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
+            
+            let handicap = Math.round((Math.abs(teamOneRank - teamTwoRank)) / 50);
             if (handicap > 3) {
                 handicap = 3;
-              }
+              };
+            let team2rank = teamTwoRank - Number(match.team2["player" + i].rank);
+            let team1rank = teamOneRank*5/6;
             let goalDifference = Math.abs(match.team1.result - match.team2.result);
             if (goalDifference > 5) {
                 goalDifference = 5;
-            }
+            };
             let rankDifference = Math.abs(team1rank - team2rank);
             if (rankDifference > 300) {
                 rankDifference = 300;
-            }
+            };
 
 
             if (team1rank > team2rank) {
@@ -1523,11 +1624,11 @@ function startApp() {
 
             function updatePlayer() {
                 match.team2["player" + i].rank = Number(match.team2["player" + i].rank) + Number(rankTeamTwo);
-                match.team2["player" + i].playerstats2019.points = Number(match.team2["player" + i].playerstats2019.points) + Number(Math.round(pointsTeamTwo));
-                match.team2["player" + i].playerstats2019.matches = Number(match.team2["player" + i].playerstats2019.matches) + 1;
-                match.team2["player" + i].playerstats2019.wins = Number(match.team2["player" + i].playerstats2019.wins) + Number(winsTeamTwo);
-                match.team2["player" + i].playerstats2019.draws = Number(match.team2["player" + i].playerstats2019.draws) + Number(drawsTeamTwo);
-                match.team2["player" + i].playerstats2019.losses = Number(match.team2["player" + i].playerstats2019.losses) + Number(lossesTeamTwo);
+                match.team2["player" + i].playerstats2020.points = Number(match.team2["player" + i].playerstats2020.points) + Number(Math.round(pointsTeamTwo));
+                match.team2["player" + i].playerstats2020.matches = Number(match.team2["player" + i].playerstats2020.matches) + 1;
+                match.team2["player" + i].playerstats2020.wins = Number(match.team2["player" + i].playerstats2020.wins) + Number(winsTeamTwo);
+                match.team2["player" + i].playerstats2020.draws = Number(match.team2["player" + i].playerstats2020.draws) + Number(drawsTeamTwo);
+                match.team2["player" + i].playerstats2020.losses = Number(match.team2["player" + i].playerstats2020.losses) + Number(lossesTeamTwo);
                 $.ajax({
                     method: "PUT",
                     url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + match.team2["player" + i]._id,
@@ -1590,37 +1691,35 @@ function startApp() {
 
         $.ajax({
             method: "GET",
-            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/58c2a5c6335a6b8e1ff6137e",
+            url: kinveyBaseUrl + "user/" + kinveyAppKey,
             headers: getKinveyUserAuthHeaders(),
-            success: userForResetLoaded,
+            success: usersForResetLoaded,
             error: handleAjaxError
         });
-        function userForResetLoaded(player) {
-            player.rank = Number(1000);
-            player.playerstats2017.points = Number(0);
-            player.playerstats2017.matches = Number(0);
-            player.playerstats2017.wins = Number(0);
-            player.playerstats2017.draws = Number(0);
-            player.playerstats2017.losses = Number(0);
-            player.playerstats2018.points = Number(0);
-            player.playerstats2018.matches = Number(0);
-            player.playerstats2018.wins = Number(0);
-            player.playerstats2018.draws = Number(0);
-            player.playerstats2018.losses = Number(0);
-            player.playerstats2019.points = Number(0);
-            player.playerstats2019.matches = Number(0);
-            player.playerstats2019.wins = Number(0);
-            player.playerstats2019.draws = Number(0);
-            player.playerstats2019.losses = Number(0);
+        function usersForResetLoaded(players) {
 
-            $.ajax({
-                method: "PUT",
-                url: kinveyBaseUrl + "user/" + kinveyAppKey + "/58c2a5c6335a6b8e1ff6137e",
-                headers: getKinveyUserAuthHeaders(),
-                data: player,
-                success: console.log("success"),
-                error: handleAjaxError
-            });
+            for (let player of players) {
+                player.playerstats2020 = {
+                    points: Number(0),
+                    matches: Number(0),
+                    wins: Number(0),
+                    draws: Number(0),
+                    losses: Number(0)
+                }
+
+                $.ajax({
+                    method: "PUT",
+                    url: kinveyBaseUrl + "user/" + kinveyAppKey + "/" + player._id,
+                    headers: getKinveyUserAuthHeaders(),
+                    data: player,
+                    success: successMSG,
+                    error: handleAjaxError
+                });
+            }
+
+            function successMSG(){
+                console.log("All users updated succesfully")
+            }
         }
     }
 
@@ -1774,6 +1873,13 @@ function startApp() {
                     draws: Number(0),
                     losses: Number(0)
                 };
+                player.playerstats2020 = {
+                    points: Number(0),
+                    matches: Number(0),
+                    wins: Number(0),
+                    draws: Number(0),
+                    losses: Number(0)
+                };
 
                 playersMap.set(player._id, player);
             }
@@ -1878,12 +1984,14 @@ function startApp() {
                       let coefficientTeamOne = 0;
                       let coefficientTeamTwo = 0;
     
-                      let team1rank = teamOneRank - Number(playersForUpdate.team1["player" + i].rank);
-                      let team2rank = teamTwoRank*5/6;
-                      let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
+                      
+                      let handicap = Math.round((Math.abs(teamOneRank - teamTwoRank)) / 50);
                       if (handicap > 3) {
                         handicap = 3;
                       }
+                      
+                      let team1rank = teamOneRank - Number(playersForUpdate.team1["player" + i].rank);
+                      let team2rank = teamTwoRank*5/6;
                       let goalDifference = Math.abs(playersForUpdate.team1.result - playersForUpdate.team2.result);
                       if (goalDifference > 5) {
                         goalDifference = 5;
@@ -2018,6 +2126,7 @@ function startApp() {
                         delete match.team1["player" + i].playerstats2017
                         delete match.team1["player" + i].playerstats2018
                         delete match.team1["player" + i].playerstats2019
+                        delete match.team1["player" + i].playerstats2020
                       }
                     }
     
@@ -2035,12 +2144,15 @@ function startApp() {
                       let coefficientTeamOne = 0;
                       let coefficientTeamTwo = 0;
     
-                      let team2rank = teamTwoRank - Number(playersForUpdate.team2["player" + i].rank);
-                      let team1rank = teamOneRank*5/6;
-                      let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
+                      
+                      let handicap = Math.round((Math.abs(teamOneRank - teamTwoRank)) / 50);
                       if (handicap > 3) {
                         handicap = 3;
                       }
+
+                      let team2rank = teamTwoRank - Number(playersForUpdate.team2["player" + i].rank);
+                      let team1rank = teamOneRank*5/6;
+
                       let goalDifference = Math.abs(playersForUpdate.team1.result - playersForUpdate.team2.result);
                       if (goalDifference > 5) {
                         goalDifference = 5;
@@ -2179,7 +2291,8 @@ function startApp() {
                         delete match.team2["player" + i].playerstats
                         delete match.team2["player" + i].playerstats2017
                         delete match.team2["player" + i].playerstats2018
-                        delete match.team2["player" + i].playerstats2019                  
+                        delete match.team2["player" + i].playerstats2019
+                        delete match.team2["player" + i].playerstats2020                  
                       }
                     }
                   }

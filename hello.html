@@ -1,3 +1,9 @@
+<head>
+  <script src="scripts/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles/football.css"/>
+  <link rel="stylesheet" href="styles/jquery-ui.css">
+</head>
+
 <div>
   <div>user</div>
   <input type="file" id="inputPlayers">
@@ -6,6 +12,8 @@
   <div>matches</div>
   <input type="file" id="inputMatches">
 </div>
+<div id="rank"></div>
+<div id="viewAllPlayers"></div>
 
 <script>
 
@@ -67,6 +75,8 @@
               matches.sort(function (a, b) {
                 return new Date(a.date) - new Date(b.date)
               });
+              let lowrank = 1000;
+              let highrank = 1000;
               for (let match of matches) {
 
                 let date = match.date;
@@ -76,33 +86,33 @@
                 playersForUpdate.team1 = {};
                 playersForUpdate.team2 = {};
 
-                playersForUpdate.team1.player1={}
-                playersForUpdate.team1.player2={}
-                playersForUpdate.team1.player3={}
-                playersForUpdate.team1.player4={}
-                playersForUpdate.team1.player5={}
-                playersForUpdate.team1.player6={}
-                playersForUpdate.team2.player1={}
-                playersForUpdate.team2.player2={}
-                playersForUpdate.team2.player3={}
-                playersForUpdate.team2.player4={}
-                playersForUpdate.team2.player5={}
-                playersForUpdate.team2.player6={}
+                playersForUpdate.team1.player1 = {}
+                playersForUpdate.team1.player2 = {}
+                playersForUpdate.team1.player3 = {}
+                playersForUpdate.team1.player4 = {}
+                playersForUpdate.team1.player5 = {}
+                playersForUpdate.team1.player6 = {}
+                playersForUpdate.team2.player1 = {}
+                playersForUpdate.team2.player2 = {}
+                playersForUpdate.team2.player3 = {}
+                playersForUpdate.team2.player4 = {}
+                playersForUpdate.team2.player5 = {}
+                playersForUpdate.team2.player6 = {}
 
-                playersForUpdate.team1.player1["playerstats" + year]={}
-                playersForUpdate.team1.player2["playerstats" + year]={}
-                playersForUpdate.team1.player3["playerstats" + year]={}
-                playersForUpdate.team1.player4["playerstats" + year]={}
-                playersForUpdate.team1.player5["playerstats" + year]={}
-                playersForUpdate.team1.player6["playerstats" + year]={}
-                playersForUpdate.team2.player1["playerstats" + year]={}
-                playersForUpdate.team2.player2["playerstats" + year]={}
-                playersForUpdate.team2.player3["playerstats" + year]={}
-                playersForUpdate.team2.player4["playerstats" + year]={}
-                playersForUpdate.team2.player5["playerstats" + year]={}
-                playersForUpdate.team2.player6["playerstats" + year]={}
+                playersForUpdate.team1.player1["playerstats" + year] = {}
+                playersForUpdate.team1.player2["playerstats" + year] = {}
+                playersForUpdate.team1.player3["playerstats" + year] = {}
+                playersForUpdate.team1.player4["playerstats" + year] = {}
+                playersForUpdate.team1.player5["playerstats" + year] = {}
+                playersForUpdate.team1.player6["playerstats" + year] = {}
+                playersForUpdate.team2.player1["playerstats" + year] = {}
+                playersForUpdate.team2.player2["playerstats" + year] = {}
+                playersForUpdate.team2.player3["playerstats" + year] = {}
+                playersForUpdate.team2.player4["playerstats" + year] = {}
+                playersForUpdate.team2.player5["playerstats" + year] = {}
+                playersForUpdate.team2.player6["playerstats" + year] = {}
 
- 
+
                 playersForUpdate.team1.player1 = playersMap.get(match.team1.player1._id);
                 playersForUpdate.team1.player2 = playersMap.get(match.team1.player2._id);
                 playersForUpdate.team1.player3 = playersMap.get(match.team1.player3._id);
@@ -151,17 +161,17 @@
                   let coefficientTeamTwo = 0;
 
                   let team1rank = teamOneRank - Number(playersForUpdate.team1["player" + i].rank);
-                  let team2rank = teamTwoRank*5/6;
-                  let handicap = Math.round((Math.abs(team1rank - team2rank)) / 50);
-                  if (handicap > 3) {
-                    handicap = 3;
+                  let team2rank = teamTwoRank * 5 / 6;
+                  let handicap = Math.round((Math.abs(team1rank - team2rank)) / 30);
+                  if (handicap > 4) {
+                    handicap = 4;
                   }
                   let goalDifference = Math.abs(playersForUpdate.team1.result - playersForUpdate.team2.result);
                   if (goalDifference > 5) {
                     goalDifference = 5;
                   }
                   let rankDifference = Math.abs(team1rank - team2rank);
-       
+
                   if (rankDifference > 300) {
                     rankDifference = 300;
                   }
@@ -290,6 +300,12 @@
                     delete match.team1["player" + i].playerstats2017
                     delete match.team1["player" + i].playerstats2018
                     delete match.team1["player" + i].playerstats2019
+                    if (playersForUpdate.team1["player" + i].rank > highrank){
+                      highrank = Number(playersForUpdate.team1["player" + i].rank)
+                    }
+                    if (playersForUpdate.team1["player" + i].rank < lowrank){
+                      lowrank = Number(playersForUpdate.team1["player" + i].rank)
+                    }
                   }
                 }
 
@@ -308,10 +324,10 @@
                   let coefficientTeamTwo = 0;
 
                   let team2rank = teamTwoRank - Number(playersForUpdate.team2["player" + i].rank);
-                  let team1rank = teamOneRank*5/6;
-                  let handicap = Math.round((Math.abs(team1rank - team2rank)) / 5);
-                  if (handicap > 3) {
-                    handicap = 3;
+                  let team1rank = teamOneRank * 5 / 6;
+                  let handicap = Math.round((Math.abs(team1rank - team2rank)) / 30);
+                  if (handicap > 4) {
+                    handicap = 4;
                   }
                   let goalDifference = Math.abs(playersForUpdate.team1.result - playersForUpdate.team2.result);
                   if (goalDifference > 5) {
@@ -440,28 +456,85 @@
                   }
 
                   function updatePlayersMap() {
-                    
+
                     playersForUpdate.team2["player" + i].rank = Number(playersForUpdate.team2["player" + i].rank) + Number(rankTeamTwo);
                     playersForUpdate.team2["player" + i]["playerstats" + year].points = Number(playersForUpdate.team2["player" + i]["playerstats" + year].points) + Number(Math.round(pointsTeamTwo));
                     playersForUpdate.team2["player" + i]["playerstats" + year].matches = Number(playersForUpdate.team2["player" + i]["playerstats" + year].matches) + 1;
                     playersForUpdate.team2["player" + i]["playerstats" + year].wins = Number(playersForUpdate.team2["player" + i]["playerstats" + year].wins) + Number(winsTeamTwo);
                     playersForUpdate.team2["player" + i]["playerstats" + year].draws = Number(playersForUpdate.team2["player" + i]["playerstats" + year].draws) + Number(drawsTeamTwo);
                     playersForUpdate.team2["player" + i]["playerstats" + year].losses = Number(playersForUpdate.team2["player" + i]["playerstats" + year].losses) + Number(lossesTeamTwo);
-                    playersMap.set(playersForUpdate.team2["player" + i]._id, playersForUpdate.team2["player" + i]); 
+                    playersMap.set(playersForUpdate.team2["player" + i]._id, playersForUpdate.team2["player" + i]);
                     match.team2["player" + i].points = Number(Math.round(pointsTeamTwo));
-                    
-                 
+
+
                     delete match.team2["player" + i].playerstats
                     delete match.team2["player" + i].playerstats2017
                     delete match.team2["player" + i].playerstats2018
-                    delete match.team2["player" + i].playerstats2019                  
+                    delete match.team2["player" + i].playerstats2019
+
+                    if (playersForUpdate.team1["player" + i].rank > highrank){
+                      highrank = Number(playersForUpdate.team1["player" + i].rank)
+                    }
+                    if (playersForUpdate.team1["player" + i].rank < lowrank){
+                      lowrank = Number(playersForUpdate.team1["player" + i].rank)
+                    }
                   }
                 }
               }
 
-              for (let match of matches) {
-                 console.log(match)
-              };
+              function comparePoints(a, b) {
+                if (Number(a.playerstats2018.points) < Number(b.playerstats2018.points))
+                  return 1;
+                if (Number(a.playerstats2018.points) > Number(b.playerstats2018.points))
+                  return -1;
+                return 0;
+              }
+
+
+              players.sort(comparePoints);
+$('#rank').append($('<td>').text(highrank-lowrank))
+   
+
+              let playersTable = $('<table>')
+                .append($('<tr>').append(
+                  '<th>N</th>' +
+                  ('<th>Име</th>') +
+                  ('<th>Ранг</th>') +
+                  ('<th>Точки</th>') +
+                  '<th>Мачове</th>' +
+                  '<th>Победи</th>' +
+                  '<th>Равни</th>' +
+                  '<th>Загуби</th>'
+                ));
+              $('#viewAllPlayers').append(playersTable);
+              let count = 1;
+
+              
+
+
+              for (let player of players) {
+                 {
+                  appendPlayerRow(player, playersTable);
+                  count++;
+                }
+                if (count > 10000) {
+                  break
+                }
+              }
+
+              function appendPlayerRow(player, playersTable) {
+
+                playersTable.append($('<tr>').append(
+                  $('<td>').text(count),
+                  $('<td>').text(player.username),
+                  $('<td>').text(player.rank),
+                  $('<td>').text(player.playerstats2018.points),
+                  $('<td>').text(player.playerstats2018.matches),
+                  $('<td>').text(player.playerstats2018.wins),
+                  $('<td>').text(player.playerstats2018.draws),
+                  $('<td>').text(player.playerstats2018.losses),
+                  $('<td>')));
+              }
             });
 
             reader.readAsText(matchesFile, 'UTF-8');
