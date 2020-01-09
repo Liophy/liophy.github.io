@@ -1209,6 +1209,13 @@ function startApp() {
                 draws: Number(0),
                 losses: Number(0)
             },
+            playerstats2020: {
+                points: Number(0),
+                matches: Number(0),
+                wins: Number(0),
+                draws: Number(0),
+                losses: Number(0)
+            },
 
             _acl: {
                 "creator": "user_id_1",
@@ -1315,7 +1322,6 @@ function startApp() {
             let coefficientTeamTwo = 0;
 
             let handicap = Math.round((Math.abs(teamOneRank - teamTwoRank)) / 50);
-            
             if (handicap > 3) {
                 handicap = 3;
               }
